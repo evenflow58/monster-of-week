@@ -1,0 +1,26 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 14
+    commands:
+      - echo "installing base packages"
+      - npm i
+      - echo "installing packages"
+      - npm run install-all
+  build:
+    commands:
+      # - echo "linting"
+      # - npm run lint-all
+      # - echo "testing"
+      # - npm run test-all
+      - echo "building packages"
+      - npm run build-all
+      # - echo "packaging templates"
+      # - npm run package-all
+      # - echo "all packaged"
+
+artifacts:
+  files:
+    - ui/.svelte-kit/**

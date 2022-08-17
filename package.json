@@ -1,0 +1,26 @@
+{
+  "name": "monster-of-week",
+  "version": "1.0.0",
+  "description": "The monster of the week website",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "lint-all": "prettier --check packages/**/**/*.ts && prettier --check packages/**/**/*.json",
+    "install-all": "npm-run-all --parallel install:*",
+    "install:ui": "cd ui && npm i",
+    "build-all": "npm-run-all --parallel build:*",
+    "build:ui": "cd ui && npm run build",
+    "test-all": "npm-run-all --parallel test:*",
+    "package-all": "npm-run-all --parallel package:*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/evenflow58/monster-of-week.git"
+  },
+  "author": "Evan Johnson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/evenflow58/monster-of-week/issues"
+  },
+  "homepage": "https://github.com/evenflow58/monster-of-week#readme"
+}
