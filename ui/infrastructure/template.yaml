@@ -5,6 +5,6 @@ Resources:
   UiBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: !Sub ${AWS::StackName}-ui
+      BucketName: !Sub ${AWS::StackName}
       VersioningConfiguration:
         Status: Enabled

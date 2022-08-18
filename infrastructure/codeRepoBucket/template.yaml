@@ -1,0 +1,17 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: The Monster of the Week S3 bucket for code
+
+Resources:
+  ArtifactBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub ${AWS::StackName}
+      VersioningConfiguration:
+        Status: Enabled
+
+Outputs:
+  ArtifactBucketId:
+    Value: !Ref ArtifactBucket
+    Description: The id of the build repository for the Monster of the Week appliation.
+    Export:
+      Name: ArtifactBucketId

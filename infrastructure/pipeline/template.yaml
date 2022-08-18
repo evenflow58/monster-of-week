@@ -12,13 +12,6 @@ Parameters:
     Default: master
 
 Resources:
-  ArtifactBucket:
-    Type: AWS::S3::Bucket
-    Properties:
-      BucketName: !Sub ${AWS::StackName}
-      VersioningConfiguration:
-        Status: Enabled
-
   BuildRunner:
     Type: AWS::CodeBuild::Project
     Properties:
@@ -35,7 +28,7 @@ Resources:
             Value: !Sub ${AWS::StackName}
           - Name: S3_BUCKET
             Type: PLAINTEXT
-            Value: !Ref ArtifactBucket
+            Value: !ImportValue ArtifactBucketId
       ServiceRole: !Ref BuildExecutionRole
       Source:
         Type: CODEPIPELINE
@@ -261,7 +254,7 @@ Resources:
       Name: !Sub ${AWS::StackName}
       ArtifactStore:
         Type: S3
-        Location: !Ref ArtifactBucket
+        Location: !ImportValue ArtifactBucketId
       RestartExecutionOnUpdate: true
       RoleArn: !GetAtt PipelineInfrastructureRole.Arn
       Stages:
@@ -310,14 +303,7 @@ Resources:
               - Name: SourceCode
             Configuration:
               ActionMode: CREATE_UPDATE
-              StackName: !Sub ${AWS::StackName}-UI
-              TemplateFile: SourceCode::ui/infrastructure/template.yaml
+              StackName: !Sub ${AWS::StackName}-ui
+              TemplatePath: SourceCode::ui/infrastructure/template.yaml
               RoleArn: !GetAtt InfrastructureRole.Arn
             RunOrder: 1
-
-Outputs:
-  ArtifactBucketName:
-    Value: !Sub ${AWS::StackName}
-    Description: The name of the artifact bucket.
-    Export:
-      Name: ArtifactBucketName
