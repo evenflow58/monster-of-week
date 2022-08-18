@@ -1,0 +1,10 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: The Monster of the Week site infrastructure
+
+Resources:
+  UiBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub ${AWS::StackName}-ui
+      VersioningConfiguration:
+        Status: Enabled

@@ -232,28 +232,28 @@ Resources:
   #                 - cloudformation:ValidateTemplate
   #               Resource: !Sub "arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:*"
 
-  # InfrastructureRole:
-  #   Type: AWS::IAM::Role
-  #   Properties:
-  #     AssumeRolePolicyDocument:
-  #       Version: "2012-10-17"
-  #       Statement:
-  #       - Effect: Allow
-  #         Principal:
-  #           Service:
-  #           - cloudformation.amazonaws.com
-  #         Action:
-  #         - sts:AssumeRole
-  #     Path: "/"
-  #     Policies:
-  #     - PolicyName: !Sub ${AWS::StackName}-CloudFormation
-  #       PolicyDocument:
-  #         Version: "2012-10-17"
-  #         Statement:
-  #         - Effect: Allow
-  #           Action:
-  #             - rds:DescribeDBClusters
-  #           Resource: !Sub arn:aws:rds:${AWS::Region}:${AWS::AccountId}:cluster:*
+  InfrastructureRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - cloudformation.amazonaws.com
+          Action:
+          - sts:AssumeRole
+      Path: "/"
+      Policies:
+      - PolicyName: !Sub ${AWS::StackName}-CloudFormation
+        PolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+          - Effect: Allow
+            Action:
+              - s3:CreateBucket
+            Resource: arn:aws:s3:::*
 
   Pipeline:
     Type: AWS::CodePipeline::Pipeline
@@ -297,6 +297,22 @@ Resources:
               - Name: SourceCode
             OutputArtifacts:
               - Name: BuildOutput
+            RunOrder: 1
+        - Name: Deploy
+          Actions:
+          - Name: UI
+            ActionTypeId:
+              Category: Deploy
+              Owner: AWS
+              Provider: CloudFormation
+              Version: 1
+            InputArtifacts:
+              - Name: SourceCode
+            Configuration:
+              ActionMode: CREATE_UPDATE
+              StackName: !Sub ${AWS::StackName}-UI
+              TemplateFile: SourceCode::ui/infrastructure/template.yaml
+              RoleArn: !GetAtt InfrastructureRole.Arn
             RunOrder: 1
 
 Outputs:
