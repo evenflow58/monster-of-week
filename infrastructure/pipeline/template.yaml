@@ -39,7 +39,7 @@ Resources:
       ServiceRole: !Ref BuildExecutionRole
       Source:
         Type: CODEPIPELINE
-        BuildSpec: pipeline/buildspec-build.yaml
+        BuildSpec: infrastructure/pipeline/buildspec-build.yaml
 
   BuildExecutionRole:
     Type: AWS::IAM::Role
