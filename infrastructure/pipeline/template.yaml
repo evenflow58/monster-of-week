@@ -35,8 +35,8 @@ Resources:
             Value: !Sub ${AWS::StackName}
           - Name: S3_BUCKET
             Type: PLAINTEXT
-            Value: !GetAtt ArtifactBucket.Name
-      ServiceRole: !ImportValue BuildExecutionRoleArn
+            Value: !Ref ArtifactBucket
+      ServiceRole: !Ref BuildExecutionRole
       Source:
         Type: CODEPIPELINE
         BuildSpec: pipeline/buildspec-build.yaml
@@ -275,7 +275,7 @@ Resources:
                 Category: Source
                 Owner: ThirdParty
                 Version: 1
-                Provider: Github
+                Provider: GitHub
               Configuration:
                 Owner: "{{resolve:secretsmanager:Github:SecretString:owner}}"
                 Repo: !Ref GitHubRepo
