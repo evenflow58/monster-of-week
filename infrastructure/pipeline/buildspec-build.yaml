@@ -23,4 +23,4 @@ phases:
 
 artifacts:
   files:
-    - ui/.svelte-kit/**
+    - ui/build/**
