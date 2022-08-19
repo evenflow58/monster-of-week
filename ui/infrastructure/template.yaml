@@ -5,6 +5,9 @@ Resources:
   UiBucket:
     Type: AWS::S3::Bucket
     Properties:
+      AccessControl: PublicRead
       BucketName: !Sub ${AWS::StackName}
       VersioningConfiguration:
         Status: Enabled
+      WebsiteConfiguration:
+        IndexDocument: prerendered/index.html

@@ -247,6 +247,7 @@ Resources:
             Action:
               - s3:CreateBucket
               - s3:DeleteBucket
+              - s3:PutBucketVersioning
             Resource: arn:aws:s3:::*
 
   Pipeline:
