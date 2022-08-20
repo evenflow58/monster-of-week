@@ -1,5 +1,5 @@
 import preprocess from 'svelte-preprocess';
-import { adapter } from 'sveltekit-adapter-aws';
+import adapter from '@sveltejs/adapter-static';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -11,13 +11,13 @@ const config = {
 		prerender: {
 			default: true
 		},
-		adapter: adapter({
-			artifactPath: 'build',
-			autoDeploy: true,
-			FQDN: 'monsterplaybook.rip',
-			stackName: 'monster-of-the-week-ui-code'
-		})
+		adapter: adapter({})
 	}
+	// preprocess: [
+	// 	preprocess({
+	// 		postcss: true
+	// 	})
+	// ]
 };
 
 export default config;

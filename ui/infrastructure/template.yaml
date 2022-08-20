@@ -9,3 +9,26 @@ Resources:
       BucketName: !Sub ${AWS::StackName}
       VersioningConfiguration:
         Status: Enabled
+      WebsiteConfiguration:
+        IndexDocument: index.html
+        # ErrorDocument: error.html
+        # RoutingRules:
+        #   - RoutingRuleCondition:
+        #       HttpErrorCodeReturnedEquals: '404'
+        #       KeyPrefixEquals: out1/
+        #     RedirectRule:
+        #       HostName: ec2-11-22-333-44.compute-1.amazonaws.com
+        #       ReplaceKeyPrefixWith: report-404/
+
+Outputs:
+  WebsiteURL:
+    Value: !GetAtt S3Bucket.WebsiteURL
+    Description: URL for website hosted on S3
+  S3BucketSecureURL:
+    Value: !Join
+      - ''
+      - - 'https://'
+        - !GetAtt
+          - S3Bucket
+          - DomainName
+    Description: Name of S3 bucket to hold website content
