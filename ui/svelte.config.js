@@ -15,7 +15,7 @@ const config = {
 			artifactPath: 'build',
 			autoDeploy: true,
 			FQDN: 'monsterplaybook.rip',
-			stackName: 'monster-of-the-week-ui'
+			stackName: 'monster-of-the-week-ui-code'
 		})
 	}
 };
