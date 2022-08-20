@@ -9,5 +9,3 @@ Resources:
       BucketName: !Sub ${AWS::StackName}
       VersioningConfiguration:
         Status: Enabled
-      WebsiteConfiguration:
-        IndexDocument: prerendered/index.html

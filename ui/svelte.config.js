@@ -12,7 +12,10 @@ const config = {
 			default: true
 		},
 		adapter: adapter({
-			artifactPath: 'build'
+			artifactPath: 'build',
+			autoDeploy: true,
+			FQDN: 'monsterplaybook.rip',
+			stackName: 'monster-of-the-week-ui'
 		})
 	}
 };

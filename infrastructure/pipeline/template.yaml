@@ -248,6 +248,7 @@ Resources:
               - s3:CreateBucket
               - s3:DeleteBucket
               - s3:PutBucketVersioning
+              - s3:PutBucketAcl
             Resource: arn:aws:s3:::*
 
   Pipeline:
@@ -292,20 +293,4 @@ Resources:
               - Name: SourceCode
             OutputArtifacts:
               - Name: BuildOutput
-            RunOrder: 1
-        - Name: Deploy
-          Actions:
-          - Name: UI
-            ActionTypeId:
-              Category: Deploy
-              Owner: AWS
-              Provider: CloudFormation
-              Version: 1
-            InputArtifacts:
-              - Name: SourceCode
-            Configuration:
-              ActionMode: CREATE_UPDATE
-              StackName: !Sub ${AWS::StackName}-ui
-              TemplatePath: SourceCode::ui/infrastructure/template.yaml
-              RoleArn: !GetAtt InfrastructureRole.Arn
             RunOrder: 1
