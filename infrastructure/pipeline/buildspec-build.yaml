@@ -28,4 +28,4 @@ phases:
 artifacts:
   base-directory: ui/build
   files:
-    - '*'
+    - '**'
