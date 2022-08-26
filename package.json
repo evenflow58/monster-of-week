@@ -12,7 +12,7 @@
   "scripts": {
     "lint-all": "prettier --check packages/**/**/*.ts && prettier --check packages/**/**/*.json",
     "install-all": "npm-run-all --parallel install:*",
-    "install:ui": "cd ui && npm i && cd ../",
+    "install:ui": "cd ui && npm i",
     "build-all": "npm-run-all --parallel build:*",
     "build:ui": "cd ui && npm run build",
     "test-all": "npm-run-all --parallel test:*",

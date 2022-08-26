@@ -8,7 +8,7 @@ phases:
       - echo "installing base packages"
       - npm i
       - echo "installing packages"
-      - npm run install:ui
+      - npm run install-all
   build:
     commands:
       # - echo "linting"
@@ -16,10 +16,13 @@ phases:
       # - echo "testing"
       # - npm run test-all
       - echo "building packages"
-      - npm run build:ui
+      - npm run build-all
       # - echo "packaging templates"
       # - npm run package-all
       # - echo "all packaged"
+  postbuild:
+    commands:
+      - ls -a
 
 artifacts:
   files:
