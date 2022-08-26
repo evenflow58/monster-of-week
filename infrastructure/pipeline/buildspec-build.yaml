@@ -22,9 +22,9 @@ phases:
       # - echo "all packaged"
   post_build:
     commands:
-      - cd ui
+      - cd ui/build
       - ls -a
 
 artifacts:
   files:
-    - "*"
+    - "ui/build/*"
