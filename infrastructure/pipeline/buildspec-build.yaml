@@ -26,5 +26,6 @@ phases:
       - ls -a
 
 artifacts:
+  base-directory: ui/build
   files:
-    - "ui/build/*"
+    - '**/*'
