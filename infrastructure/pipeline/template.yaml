@@ -23,12 +23,9 @@ Resources:
         Image: aws/codebuild/standard:6.0
         Type: LINUX_CONTAINER
         EnvironmentVariables:
-          - Name: STACK_NAME
+          - Name: SITE_S3_BUCKET
             Type: PLAINTEXT
-            Value: !Sub ${AWS::StackName}
-          - Name: S3_BUCKET
-            Type: PLAINTEXT
-            Value: !ImportValue ArtifactBucketId
+            Value: !ImportValue ${AWS::StackName}-ui
       ServiceRole: !Ref BuildExecutionRole
       Source:
         Type: CODEPIPELINE

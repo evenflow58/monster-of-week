@@ -22,13 +22,11 @@ Resources:
 
 Outputs:
   WebsiteURL:
-    Value: !GetAtt S3Bucket.WebsiteURL
+    Value: !GetAtt UiBucket.WebsiteURL
     Description: URL for website hosted on S3
   S3BucketSecureURL:
     Value: !Join
       - ''
       - - 'https://'
-        - !GetAtt
-          - S3Bucket
-          - DomainName
+        - !GetAtt UiBucket.DomainName
     Description: Name of S3 bucket to hold website content
