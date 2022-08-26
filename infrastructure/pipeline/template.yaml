@@ -297,7 +297,10 @@ Resources:
               Version: 1
             RunOrder: 1
             Configuration:
-              BucketName: ${AWS::StackName}-ui
+              BucketName: !Join
+                - ''
+                - - !Ref AWS::StackName
+                  - '-ui'
               Extract: true
             InputArtifacts:
               - Name: BuildOutput
