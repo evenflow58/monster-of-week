@@ -17,9 +17,9 @@ phases:
       # - npm run test-all
       - echo "building packages"
       - npm run build-all
-      - echo "packaging templates"
-      - npm run package-all
-      - echo "all packaged"
+      # - echo "packaging templates"
+      # - npm run package-all
+      # - echo "all packaged"
 
 artifacts:
   files:
