@@ -20,7 +20,7 @@ phases:
       # - echo "packaging templates"
       # - npm run package-all
       # - echo "all packaged"
-  postbuild:
+  post_build:
     commands:
       - ls -a
 
