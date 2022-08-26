@@ -16,7 +16,7 @@ phases:
       # - echo "testing"
       # - npm run test-all
       - echo "building packages"
-      - npm run build-all
+      - npm run build:ui
       # - echo "packaging templates"
       # - npm run package-all
       # - echo "all packaged"
