@@ -16,8 +16,7 @@
     "build-all": "npm-run-all --parallel build:*",
     "build:ui": "cd ui && npm run build",
     "test-all": "npm-run-all --parallel test:*",
-    "package-all": "npm-run-all --parallel package:*",
-    "package:ui": "cd ui && npm run package:sam"
+    "package-all": "npm-run-all --parallel package:*"
   },
   "repository": {
     "type": "git",

@@ -22,10 +22,6 @@ Resources:
         ComputeType: BUILD_GENERAL1_MEDIUM
         Image: aws/codebuild/standard:6.0
         Type: LINUX_CONTAINER
-        EnvironmentVariables:
-          - Name: SITE_S3_BUCKET
-            Type: PLAINTEXT
-            Value: !ImportValue ${AWS::StackName}-ui
       ServiceRole: !Ref BuildExecutionRole
       Source:
         Type: CODEPIPELINE
@@ -291,3 +287,18 @@ Resources:
             OutputArtifacts:
               - Name: BuildOutput
             RunOrder: 1
+        - Name: Deploy
+          Actions:
+          - Name: DeployUiCode
+            ActionTypeId:
+              Category: Deploy
+              Owner: AWS
+              Provider: S3
+              Version: 1
+            RunOrder: 1
+            Configuration:
+              BucketName: ${AWS::StackName}-ui
+              Extract: true
+            InputArtifacts:
+              - Name: BuildOutput
+            Region: us-east-1
