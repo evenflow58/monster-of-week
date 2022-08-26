@@ -22,6 +22,7 @@ phases:
       # - echo "all packaged"
   post_build:
     commands:
+      - cd ui
       - ls -a
 
 artifacts:
