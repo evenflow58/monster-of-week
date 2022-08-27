@@ -2,6 +2,23 @@ AWSTemplateFormatVersion: 2010-09-09
 Description: The Monster of the Week site infrastructure
 
 Resources:
+  UiBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref UiBucket
+      PolicyDocument:
+        Id: UiBucketPolicy
+        Version: 2012-10-17
+        Statement:
+          - Sid: PublicReadForGetBucketObject
+            Effect: Allow
+            Principal: '*'
+            Action: s3:GetObject
+            Resource: !Join
+              - ''
+              - - !GetAtt UiBucket.Arn
+                - /*
+
   UiBucket:
     Type: AWS::S3::Bucket
     Properties:
@@ -21,6 +38,11 @@ Resources:
         #       ReplaceKeyPrefixWith: report-404/
 
 Outputs:
+  UiBucketName:
+    Value: !Ref UiBucket
+    Description: The name of the UI bucket
+    Export:
+      Name: UiBucket
   WebsiteURL:
     Value: !GetAtt UiBucket.WebsiteURL
     Description: URL for website hosted on S3

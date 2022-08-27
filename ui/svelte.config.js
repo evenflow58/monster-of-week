@@ -12,12 +12,12 @@ const config = {
 			default: true
 		},
 		adapter: adapter({})
-	}
-	// preprocess: [
-	// 	preprocess({
-	// 		postcss: true
-	// 	})
-	// ]
+	},
+	preprocess: [
+		preprocess({
+			postcss: true
+		})
+	]
 };
 
 export default config;

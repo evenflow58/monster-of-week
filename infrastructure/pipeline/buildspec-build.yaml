@@ -11,15 +11,8 @@ phases:
       - npm run install-all
   build:
     commands:
-      # - echo "linting"
-      # - npm run lint-all
-      # - echo "testing"
-      # - npm run test-all
       - echo "building packages"
       - npm run build-all
-      # - echo "packaging templates"
-      # - npm run package-all
-      # - echo "all packaged"
   post_build:
     commands:
       - cd ui/build
