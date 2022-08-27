@@ -42,7 +42,7 @@ Outputs:
     Value: !Ref UiBucket
     Description: The name of the UI bucket
     Export:
-      Name: UiBucket
+      Name: UiBucketName
   WebsiteURL:
     Value: !GetAtt UiBucket.WebsiteURL
     Description: URL for website hosted on S3
