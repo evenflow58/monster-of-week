@@ -15,7 +15,7 @@ phases:
       - npm run build-all
   post_build:
     commands:
-      - cd ui/build
+      - cd ui/build/_app
       - ls -a
 
 artifacts:
