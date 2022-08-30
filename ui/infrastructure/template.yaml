@@ -183,3 +183,8 @@ Outputs:
       - - 'https://'
         - !GetAtt UiBucket.DomainName
     Description: Name of S3 bucket to hold website content
+  UiBucketHostedZoneId:
+    Value: !GetAtt UiBucket.CanonicalHostedZoneID
+    Description: The hosted zone id for the ui bucket
+    Export:
+      Name: UiBucketHostedZoneId
