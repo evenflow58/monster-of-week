@@ -16,7 +16,7 @@ Resources:
     Type: AWS::Route53::RecordSet
     Properties:
       AliasTarget:
-        DNSName: !ImportValue 
+        DNSName: !ImportValue UiBucketDomainName
         HostedZoneId: !GetAtt HostedZone.Id
         EvaluateTargetHealth: true
       HostedZoneId: !GetAtt HostedZone.Id
