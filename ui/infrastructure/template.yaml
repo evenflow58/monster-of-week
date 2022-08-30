@@ -159,6 +159,11 @@ Resources:
     Properties:
       AccessControl: PublicRead
       BucketName: !Sub ${AWS::StackName}
+      # PublicAccessBlockConfiguration:
+      #   BlockPublicAcls: True
+      #   BlockPublicPolicy: True
+      #   IgnorePublicAcls: True
+      #   RestrictPublicBuckets: True
       WebsiteConfiguration:
         IndexDocument: index.html
         # ErrorDocument: error.html

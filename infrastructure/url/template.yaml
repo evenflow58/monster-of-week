@@ -16,8 +16,8 @@ Resources:
     Type: AWS::Route53::RecordSet
     Properties:
       AliasTarget:
-        DNSName: !ImportValue UiBucketDomainName
-        HostedZoneId: !ImportValue UiBucketDomainName
+        DNSName: s3-website-us-east-1.amazonaws.com
+        HostedZoneId: Z3AQBSTGFYJSTF
         EvaluateTargetHealth: true
       HostedZoneId: !GetAtt HostedZone.Id
       Name: !Ref DomainName
