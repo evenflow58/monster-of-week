@@ -1,0 +1,24 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: The Monster of the Week site infrastructure
+
+Parameters:
+  DomainName:
+    Type: String
+    Default: monsterplaybook.rip
+
+Resources:
+  HostedZone:
+    Type: AWS::Route53::HostedZone
+    Properties:
+      Name: !Ref DomainName
+
+  DnsName:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      AliasTarget:
+        DNSName: !ImportValue 
+        HostedZoneId: !GetAtt HostedZone.Id
+        EvaluateTargetHealth: true
+      HostedZoneId: !GetAtt HostedZone.Id
+      Name: !Ref DomainName
+      Type: A
