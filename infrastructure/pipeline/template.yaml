@@ -22,227 +22,10 @@ Resources:
         ComputeType: BUILD_GENERAL1_MEDIUM
         Image: aws/codebuild/standard:6.0
         Type: LINUX_CONTAINER
-      ServiceRole: !Ref BuildExecutionRole
+      ServiceRole: !ImportValue BuildExecutionRoleArn
       Source:
         Type: CODEPIPELINE
         BuildSpec: infrastructure/pipeline/buildspec-build.yaml
-
-  BuildExecutionRole:
-    Type: AWS::IAM::Role
-    Properties:
-      AssumeRolePolicyDocument:
-        Version: "2012-10-17"
-        Statement:
-          - Effect: Allow
-            Principal:
-              Service:
-                - codebuild.amazonaws.com
-            Action:
-              - sts:AssumeRole
-      Policies:
-      - PolicyName: !Sub ${AWS::StackName}
-        PolicyDocument:
-          Version: "2012-10-17"
-          Statement:
-            - Effect: Allow
-              Action:
-                - logs:CreateLogGroup
-                - logs:CreateLogStream
-                - logs:PutLogEvents
-              Resource:
-                - !Sub arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/codebuild/*
-            - Effect: Allow
-              Action:
-                - s3:ListObjectsV2
-                - s3:ListBucket
-                - s3:PutObject
-                - s3:PutObjectAcl
-                - s3:GetObject
-                - s3:GetObjectVersion
-                - s3:DeleteObject
-              Resource: arn:aws:s3:::*
-
-  PipelineInfrastructureRole:
-    Type: AWS::IAM::Role
-    Properties:
-      AssumeRolePolicyDocument:
-        Version: "2012-10-17"
-        Statement:
-          - Effect: Allow
-            Principal:
-              Service:
-                - cloudformation.amazonaws.com
-                - codepipeline.amazonaws.com
-            Action:
-              - sts:AssumeRole
-      Path: "/"
-      Policies:
-      - PolicyName: !Sub ${AWS::StackName}-Pipeline-CloudFormation
-        PolicyDocument:
-          Version: "2012-10-17"
-          Statement:
-            - Effect: Allow
-              Action:
-                - codepipeline:GetPipeline
-                - codepipeline:UpdatePipeline
-                - codepipeline:DeregisterWebhookWithThirdParty
-                - codepipeline:RegisterWebhookWithThirdParty
-                - codepipeline:PutWebhook
-                - codepipeline:DeletePipeline
-                - codepipeline:DeleteWebhook
-                - codepipeline:ListTags
-                - codepipeline:TagResource
-                - codepipeline:UntagResource
-              Resource: !Sub "arn:aws:codepipeline:${AWS::Region}:${AWS::AccountId}:*"
-            - Effect: Allow
-              Action:
-                - s3:ListObjectsV2
-                - s3:ListBucket
-                - s3:PutObject
-                - s3:PutObjectAcl
-                - s3:GetObject
-                - s3:GetObjectVersion
-                - s3:DeleteObject
-              Resource: arn:aws:s3:::*
-            - Effect: Allow
-              Action:
-                - cloudformation:DescribeStacks
-                - cloudformation:CreateChangeSet
-                - cloudformation:CreateStack
-                - cloudformation:UpdateStack
-              Resource: !Sub "arn:aws:cloudformation:${AWS::Region}:*"
-            - Effect: Allow
-              Action:
-                - iam:PassRole
-                - iam:CreateRole
-                - iam:DeleteRole
-                - iam:GetRole
-                - iam:GetRolePolicy
-                - iam:PutRolePolicy
-                - iam:DeleteRolePolicy
-                - iam:AttachRolePolicy
-                - iam:DetachRolePolicy
-                - iam:CreateServiceLinkedRole
-              Resource: "*"
-            - Effect: Allow
-              Action:
-                - apigateway:POST
-                - apigateway:DELETE
-                - apigateway:GET
-                - apigateway:PUT
-              Resource: !Sub "arn:aws:apigateway:${AWS::Region}::*"
-            - Effect: Allow
-              Action:
-                - secretsmanager:GetSecretValue
-              Resource: !Sub "arn:aws:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:*"
-            - Effect: Allow
-              Action:
-                - codebuild:StartBuild
-                - codebuild:BatchGetBuilds
-              Resource: !Sub "arn:aws:codebuild:${AWS::Region}:${AWS::AccountId}:*"
-            - Effect: Allow
-              Action:
-                - codedeploy:CreateApplication
-                - codedeploy:DeleteApplication
-                - codedeploy:CreateDeploymentGroup
-                - codedeploy:DeleteDeploymentGroup
-                - codedeploy:CreateDeployment
-                - codedeploy:GetDeployment
-                - codedeploy:GetDeploymentConfig
-                - codedeploy:RegisterApplicationRevision
-              Resource: !Sub "arn:aws:codedeploy:${AWS::Region}:${AWS::AccountId}:*:*"
-            - Effect: Allow
-              Action:
-                - cloudfront:UpdateDistribution
-              Resource: "*"
-            - Effect: Allow
-              Action:
-                - route53:GetHostedZone
-                - route53:ChangeResourceRecordSets
-                - route53:ListResourceRecordSets
-                - route53:GetChange
-              Resource: arn:aws:route53:::*
-            - Effect: Allow
-              Action:
-                - logs:DescribeLogGroups
-                - logs:CreateLogGroup
-                - logs:DeleteLogGroup
-                - logs:PutRetentionPolicy
-              Resource: !Sub "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:*"
-
-  # PipelineExecutionRole:
-  #   Type: AWS::IAM::Role
-  #   Properties:
-  #     AssumeRolePolicyDocument:
-  #       Version: "2012-10-17"
-  #       Statement:
-  #         - Effect: Allow
-  #           Principal:
-  #             Service:
-  #               - codepipeline.amazonaws.com
-  #           Action:
-  #             - sts:AssumeRole
-  #     Path: "/"
-  #     Policies:
-  #       - PolicyName: !Sub ${AWS::StackName}-Pipeline-Execution-Role
-  #         PolicyDocument:
-  #           Version: "2012-10-17"
-  #           Statement:
-  #             - Effect: Allow
-  #               Action: iam:PassRole
-  #               Resource: !Sub "arn:aws:codebuild:${AWS::Region}:${AWS::AccountId}:*"
-  #             - Effect: Allow
-  #               Action:
-  #                 - codebuild:BatchGetBuilds
-  #                 - codebuild:StartBuild
-  #               Resource: !Sub "arn:aws:codebuild:${AWS::Region}:${AWS::AccountId}:*"
-  #             - Effect: Allow
-  #               Action:
-  #                 - codedeploy:CreateApplication
-  #                 - codedeploy:GetApplicationRevision
-  #                 - codedeploy:GetDeployment
-  #                 - codedeploy:GetDeploymentConfig
-  #                 - codedeploy:RegisterApplicationRevision
-  #               Resource: !Sub "arn:aws:codedeploy:${AWS::Region}:${AWS::AccountId}:*"
-  #             - Effect: Allow
-  #               Action:
-  #                 - cloudformation:CreateStack
-  #                 - cloudformation:DeleteStack
-  #                 - cloudformation:DescribeStacks
-  #                 - cloudformation:UpdateStack
-  #                 - cloudformation:CreateChangeSet
-  #                 - cloudformation:DeleteChangeSet
-  #                 - cloudformation:DescribeChangeSet
-  #                 - cloudformation:ExecuteChangeSet
-  #                 - cloudformation:SetStackPolicy
-  #                 - cloudformation:ValidateTemplate
-  #               Resource: !Sub "arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:*"
-
-  InfrastructureRole:
-    Type: AWS::IAM::Role
-    Properties:
-      AssumeRolePolicyDocument:
-        Version: "2012-10-17"
-        Statement:
-        - Effect: Allow
-          Principal:
-            Service:
-            - cloudformation.amazonaws.com
-          Action:
-          - sts:AssumeRole
-      Path: "/"
-      Policies:
-      - PolicyName: !Sub ${AWS::StackName}-CloudFormation
-        PolicyDocument:
-          Version: "2012-10-17"
-          Statement:
-          - Effect: Allow
-            Action:
-              - s3:CreateBucket
-              - s3:DeleteBucket
-              - s3:PutBucketVersioning
-              - s3:PutBucketAcl
-            Resource: arn:aws:s3:::*
 
   Pipeline:
     Type: AWS::CodePipeline::Pipeline
@@ -252,7 +35,7 @@ Resources:
         Type: S3
         Location: !ImportValue ArtifactBucketId
       RestartExecutionOnUpdate: true
-      RoleArn: !GetAtt PipelineInfrastructureRole.Arn
+      RoleArn: !ImportValue PipelineInfrastructureRoleArn
       Stages:
         - Name: Source
           Actions:
@@ -286,7 +69,7 @@ Resources:
               ActionMode: CREATE_UPDATE
               StackName: !Sub '${AWS::StackName}-dns'
               TemplatePath: SourceCode::infrastructure/url/template.yaml
-              RoleArn: !GetAtt PipelineInfrastructureRole.Arn
+              RoleArn: !ImportValue PipelineInfrastructureRoleArn
               Capabilities: CAPABILITY_NAMED_IAM,CAPABILITY_AUTO_EXPAND
             RunOrder: 1
           - Name: BuildAndTest

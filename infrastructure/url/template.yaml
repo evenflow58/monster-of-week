@@ -12,13 +12,13 @@ Resources:
     Properties:
       Name: !Ref DomainName
 
-  DnsName:
-    Type: AWS::Route53::RecordSet
-    Properties:
-      AliasTarget:
-        DNSName: !ImportValue UiBucketDomainName
-        HostedZoneId: !GetAtt HostedZone.Id
-        EvaluateTargetHealth: true
-      HostedZoneId: !GetAtt HostedZone.Id
-      Name: !Ref DomainName
-      Type: A
+  # DnsName:
+  #   Type: AWS::Route53::RecordSet
+  #   Properties:
+  #     AliasTarget:
+  #       DNSName: !ImportValue UiBucketDomainName
+  #       HostedZoneId: !GetAtt HostedZone.Id
+  #       EvaluateTargetHealth: true
+  #     HostedZoneId: !GetAtt HostedZone.Id
+  #     Name: !Ref DomainName
+  #     Type: A
