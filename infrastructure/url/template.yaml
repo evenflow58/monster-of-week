@@ -5,12 +5,15 @@ Parameters:
   DomainName:
     Type: String
     Default: monsterplaybook.rip
+  HostedZoneId:
+    Type: String
+    Default: 'Z0953270AK2JGXA33JIB'
 
 Resources:
-  HostedZone:
-    Type: AWS::Route53::HostedZone
-    Properties:
-      Name: !Ref DomainName
+#   HostedZone:
+#     Type: AWS::Route53::HostedZone
+#     Properties:
+#       Name: !Ref DomainName
 
   DnsName:
     Type: AWS::Route53::RecordSet
@@ -19,6 +22,6 @@ Resources:
         DNSName: s3-website-us-east-1.amazonaws.com
         HostedZoneId: Z3AQBSTGFYJSTF
         EvaluateTargetHealth: true
-      HostedZoneId: !GetAtt HostedZone.Id
+      HostedZoneId: !Ref HostedZoneId
       Name: !Ref DomainName
       Type: A

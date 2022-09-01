@@ -1,10 +1,10 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: The Monster of the Week site infrastructure
 
-# Parameters:
-#   DomainName:
-#     Type: String
-#     Default: monsterplaybook.rip
+Parameters:
+  BucketName:
+    Type: String
+    Default: monsterplaybook.rip
 
 # Mappings:
 #   Region2S3WebsiteSuffix:
@@ -151,19 +151,20 @@ Resources:
           - Sid: ReadAccess
             Effect: Allow
             Principal: "*"
-            Action: s3:GetObject
+            Action:
+            - s3:GetObject
             Resource: !Sub '${UiBucket.Arn}/*'
 
   UiBucket:
     Type: AWS::S3::Bucket
     Properties:
-      AccessControl: PublicRead
-      BucketName: !Sub ${AWS::StackName}
-      # PublicAccessBlockConfiguration:
-      #   BlockPublicAcls: True
-      #   BlockPublicPolicy: True
-      #   IgnorePublicAcls: True
-      #   RestrictPublicBuckets: True
+      # AccessControl: PublicRead
+      BucketName: !Ref BucketName
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: True
+        BlockPublicPolicy: True
+        IgnorePublicAcls: True
+        RestrictPublicBuckets: True
       WebsiteConfiguration:
         IndexDocument: index.html
         # ErrorDocument: error.html
