@@ -10,11 +10,6 @@ Parameters:
     Default: 'Z0953270AK2JGXA33JIB'
 
 Resources:
-#   HostedZone:
-#     Type: AWS::Route53::HostedZone
-#     Properties:
-#       Name: !Ref DomainName
-
   DnsName:
     Type: AWS::Route53::RecordSet
     Properties:
