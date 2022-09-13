@@ -4,29 +4,33 @@ Description: The Monster of the Week site infrastructure
 Parameters:
   BucketName:
     Type: String
-    Default: monsterplaybook.rip
+    Default: monster-of-the-week-ui
 
 Resources:
-  UiBucketPolicy:
-    Type: AWS::S3::BucketPolicy
-    Properties:
-      Bucket: !Ref UiBucket
-      PolicyDocument:
-        Id: UiBucketPolicy
-        Version: 2012-10-17
-        Statement:
-          - Sid: ReadAccess
-            Effect: Allow
-            Principal: "*"
-            Action:
-            - s3:GetObject
-            Resource: !Sub '${UiBucket.Arn}/*'
+  # UiBucketPolicy:
+  #   Type: AWS::S3::BucketPolicy
+  #   Properties:
+  #     Bucket: !Ref UiBucket
+  #     PolicyDocument:
+  #       Id: UiBucketPolicy
+  #       Version: 2012-10-17
+  #       Statement:
+  #         - Sid: ReadAccess
+  #           Effect: Allow
+  #           # Principal: "*"
+  #           Principal:
+  #             AWS: arn:aws:iam::cloudfront:*
+  #           Action:
+  #           - s3:GetObject
+  #           Resource: !Sub '${UiBucket.Arn}/*'
 
   UiBucket:
     Type: AWS::S3::Bucket
     Properties:
-      AccessControl: PublicRead
+      AccessControl: Private
       BucketName: !Ref BucketName
+      # AccessControl: PublicRead
+      # BucketName: !Ref BucketName
       WebsiteConfiguration:
         IndexDocument: index.html
         # ErrorDocument: error.html
@@ -37,9 +41,16 @@ Outputs:
     Description: The name of the UI bucket
     Export:
       Name: UiBucketName
+  UiBucketArn:
+    Value: !GetAtt UiBucket.Arn
+    Description: The arn of the UI bucket
+    Export:
+      Name: UiBucketArn
   WebsiteURL:
     Value: !GetAtt UiBucket.WebsiteURL
     Description: URL for website hosted on S3
+    Export:
+      Name: WebsiteURL
   UiBucketDomainName:
     Value: !GetAtt UiBucket.DomainName
     Description: The domain name of the UI bucket.

@@ -7,16 +7,120 @@ Parameters:
     Default: monsterplaybook.rip
   HostedZoneId:
     Type: String
-    Default: 'Z0953270AK2JGXA33JIB'
+    Default: Z0953270AK2JGXA33JIB
+  S3DnsName:
+    Type: String
+    Default: s3-website-us-east-1.amazonaws.com
+  S3HostedZoneId:
+    Type: String
+    Default: Z3AQBSTGFYJSTF
+  CloudFronCert:
+    Type: String
+    Default: arn:aws:acm:us-east-1:625961017727:certificate/edd15537-9b78-4e21-a100-9ce277ca42bf
 
 Resources:
-  DnsName:
-    Type: AWS::Route53::RecordSet
+  CloudFrontOriginIdentity:
+    Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
     Properties:
-      AliasTarget:
-        DNSName: s3-website-us-east-1.amazonaws.com
-        HostedZoneId: Z3AQBSTGFYJSTF
-        EvaluateTargetHealth: true
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: 'monster of the week origin identity'
+
+  UiBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !ImportValue UiBucketName
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            # Principal: "*"
+            Principal:
+              AWS: !Sub 'arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${CloudFrontOriginIdentity}'
+            Action: s3:GetObject
+            Resource:
+              Fn::Sub:
+              - '${UiBucketArn}/*'
+              - UiBucketArn: !ImportValue UiBucketArn
+
+  CloudFrontDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Aliases:
+          - monsterplaybook.rip
+          - www.monsterplaybook.rip
+          - dev.monsterplaybook.rip
+        Origins:
+          - DomainName: !ImportValue UiBucketDomainName
+            Id: S3-private-bucket
+            S3OriginConfig:
+              OriginAccessIdentity: !Sub 'origin-access-identity/cloudfront/${CloudFrontOriginIdentity}'
+        Enabled: true
+        Comment: The monster of the week cloud front distribution
+        DefaultCacheBehavior:
+          AllowedMethods:
+            - GET
+            - HEAD
+          TargetOriginId: S3-private-bucket
+          ForwardedValues:
+            QueryString: false
+            Cookies:
+              Forward: none
+          ViewerProtocolPolicy: redirect-to-https
+        DefaultRootObject: index.html
+        ViewerCertificate:
+          AcmCertificateArn: !Ref CloudFronCert
+          SslSupportMethod: sni-only
+  # # DnsName:
+  # #   Type: AWS::Route53::RecordSet
+  # #   Properties:
+  # #     AliasTarget:
+  # #       DNSName: !Ref S3DnsName
+  # #       HostedZoneId: !Ref S3HostedZoneId
+  # #       EvaluateTargetHealth: true
+  # #     HostedZoneId: !Ref HostedZoneId
+  # #     Name: !Ref DomainName
+  # #     Type: A
+
+  # CloudFront:
+  #   Type: AWS::CloudFront::Distribution
+  #   Properties:
+  #     DistributionConfig:
+  #       Comment: Cloudfront Distribution for the monsterPlaybook.rip bucket
+  #       Origins:
+  #       - DomainName: !Select [2, !Split ["/", !ImportValue WebsiteURL]]
+  #         Id: S3Origin
+  #         CustomOriginConfig:
+  #           HTTPPort: 80
+  #           HTTPSPort: 443
+  #           OriginProtocolPolicy: http-only
+  #       Enabled: true
+  #       HttpVersion: 'http2'
+  #       DefaultRootObject: index.html
+  #       Aliases:
+  #       - !Ref DomainName
+  #       DefaultCacheBehavior:
+  #         AllowedMethods:
+  #         - GET
+  #         - HEAD
+  #         Compress: true
+  #         TargetOriginId: S3Origin
+  #         ForwardedValues:
+  #           QueryString: true
+  #           Cookies:
+  #             Forward: none
+  #         ViewerProtocolPolicy: redirect-to-https
+  #       ViewerCertificate:
+  #         AcmCertificateArn: !Ref CloudFrontCert
+  #         SslSupportMethod: sni-only
+
+  DnsName:
+    Type: AWS::Route53::RecordSetGroup
+    Properties:
       HostedZoneId: !Ref HostedZoneId
-      Name: !Ref DomainName
-      Type: A
+      RecordSets:
+      - Name: !Ref DomainName
+        Type: A
+        AliasTarget:
+          HostedZoneId: Z2FDTNDATAQYW2 
+          DNSName: !GetAtt CloudFrontDistribution.DomainName
