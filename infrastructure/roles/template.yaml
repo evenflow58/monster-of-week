@@ -127,6 +127,7 @@ Resources:
             - Effect: Allow
               Action:
                 - cloudfront:UpdateDistribution
+                - cloudfront:CreateCloudFrontOriginAccessIdentity
               Resource: "*"
             - Effect: Allow
               Action:
