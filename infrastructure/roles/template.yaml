@@ -191,12 +191,22 @@ Resources:
                 Effect: Allow
                 Resource: !Sub "arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:*"
               - Action:
-                  - iam:CreateRole
-                  - iam:DetachRolePolicy
-                  - iam:DeleteRole
-                  - iam:AttachRolePolicy
+                  - iam:*
+                  # - iam:CreateRole
+                  # - iam:DetachRolePolicy
+                  # - iam:DeleteRole
+                  # - iam:AttachRolePolicy
+                  # - iam:PassRole
                 Effect: Allow
-                Resource: !Sub 'arn:aws:iam::${AWS::AccountId}:role/*'
+                # Resource: !Sub 'arn:aws:iam::${AWS::AccountId}:role/*'
+                Resource: '*'
+              - Action:
+                  - lambda:DeleteFunction
+                  - lambda:CreateFunction
+                  - lambda:TagResource
+                  - lambda:UntagResource
+                Effect: Allow
+                Resource: !Sub 'arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:*'
               - Action:
                   - s3:GetObject
                 Effect: Allow
