@@ -98,7 +98,7 @@ Resources:
                 Version: 1
               Configuration:
                 ActionMode: CHANGE_SET_REPLACE
-                RoleArn: !ImportValue PipelineInfrastructureRoleArn
+                RoleArn: !ImportValue PipelineExecutionRoleArn
                 StackName: !Sub '${AWS::StackName}-Stack-Beta'
                 ChangeSetName: !Sub '${AWS::StackName}-ChangeSet-Beta'
                 TemplatePath: BuildOutput::ui.yaml
@@ -115,7 +115,7 @@ Resources:
                 Version: 1
               Configuration:
                 ActionMode: CHANGE_SET_EXECUTE
-                RoleArn: !ImportValue PipelineInfrastructureRoleArn
+                RoleArn: !ImportValue PipelineExecutionRoleArn
                 StackName: !Sub '${AWS::StackName}-Stack-Beta'
                 ChangeSetName: !Sub '${AWS::StackName}-ChangeSet-Beta'
               OutputArtifacts:
@@ -138,7 +138,7 @@ Resources:
                 Version: 1
               Configuration:
                 ActionMode: CHANGE_SET_REPLACE
-                RoleArn: !ImportValue PipelineInfrastructureRoleArn
+                RoleArn: !ImportValue PipelineExecutionRoleArn
                 StackName: !Sub '${AWS::StackName}-Stack-Prod'
                 ChangeSetName: !Sub '${AWS::StackName}-ChangeSet-Prod'
                 TemplatePath: BuildOutput::ui.yaml
@@ -155,7 +155,7 @@ Resources:
                 Version: 1
               Configuration:
                 ActionMode: CHANGE_SET_EXECUTE
-                RoleArn: !ImportValue PipelineInfrastructureRoleArn
+                RoleArn: !ImportValue PipelineExecutionRoleArn
                 StackName: !Sub '${AWS::StackName}-Stack-Prod'
                 ChangeSetName: !Sub '${AWS::StackName}-ChangeSet-Prod'
               OutputArtifacts:

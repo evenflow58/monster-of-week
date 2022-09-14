@@ -20,7 +20,7 @@ phases:
       - ls -a
 
 artifacts:
-  base-directory: ui/build
+  base-directory: '*'
   files:
-    - '**/*'
+    - 'ui/build/**/*'
     - ui.yaml
