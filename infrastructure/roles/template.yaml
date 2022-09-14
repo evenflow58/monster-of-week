@@ -82,8 +82,10 @@ Resources:
                 - cloudformation:DescribeStacks
                 - cloudformation:CreateChangeSet
                 - cloudformation:DescribeChangeSet
+                - cloudformation:ExecuteChangeSet
                 - cloudformation:CreateStack
                 - cloudformation:UpdateStack
+                - cloudformation:DeleteChangeSet
               Resource: !Sub "arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:*"
             - Effect: Allow
               Action:
@@ -153,42 +155,29 @@ Resources:
                 - logs:PutRetentionPolicy
               Resource: !Sub "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:*"
   
-  PipelineExecutionRole:
+  CloudFormationExecutionRole:
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:
-        Version: "2012-10-17"
+        Version: 2012-10-17
         Statement:
-          - Effect: Allow
-            Principal:
-              Service:
-                - codepipeline.amazonaws.com
-            Action:
-              - sts:AssumeRole
-      Path: "/"
+          Action:
+            - sts:AssumeRole
+          Effect: Allow
+          Principal:
+            Service:
+              - cloudformation.amazonaws.com
+      Path: /
       Policies:
-        - PolicyName: !Sub ${AWS::StackName}-Pipeline-Execution-Role
+        - PolicyName: CloudFormationPolicy
           PolicyDocument:
-            Version: "2012-10-17"
+            Version: 2012-10-17
             Statement:
-              - Effect: Allow
-                Action: iam:PassRole
-                Resource: !Sub "arn:aws:codebuild:${AWS::Region}:${AWS::AccountId}:*"
-              - Effect: Allow
-                Action:
-                  - codebuild:BatchGetBuilds
-                  - codebuild:StartBuild
-                Resource: !Sub "arn:aws:codebuild:${AWS::Region}:${AWS::AccountId}:*"
-              - Effect: Allow
-                Action:
-                  - codedeploy:CreateApplication
-                  - codedeploy:GetApplicationRevision
-                  - codedeploy:GetDeployment
-                  - codedeploy:GetDeploymentConfig
-                  - codedeploy:RegisterApplicationRevision
-                Resource: !Sub "arn:aws:codedeploy:${AWS::Region}:${AWS::AccountId}:*"
-              - Effect: Allow
-                Action:
+              - Action:
+                  - cloudformation:CreateChangeSet
+                Effect: Allow
+                Resource: !Sub 'arn:aws:cloudformation:${AWS::Region}:aws:transform/*'
+              - Action:
                   - cloudformation:CreateStack
                   - cloudformation:DeleteStack
                   - cloudformation:DescribeStacks
@@ -199,7 +188,70 @@ Resources:
                   - cloudformation:ExecuteChangeSet
                   - cloudformation:SetStackPolicy
                   - cloudformation:ValidateTemplate
+                Effect: Allow
                 Resource: !Sub "arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:*"
+              - Action:
+                  - iam:CreateRole
+                  - iam:DetachRolePolicy
+                  - iam:DeleteRole
+                  - iam:AttachRolePolicy
+                Effect: Allow
+                Resource: !Sub 'arn:aws:iam::${AWS::AccountId}:role/*'
+              - Action:
+                  - s3:GetObject
+                Effect: Allow
+                Resource:
+                  Fn::Sub:
+                    - 'arn:aws:s3:::${ArtifactBucketId}/*'
+                    - ArtifactBucketId: !ImportValue ArtifactBucketId
+
+  # PipelineExecutionRole:
+  #   Type: AWS::IAM::Role
+  #   Properties:
+  #     AssumeRolePolicyDocument:
+  #       Version: "2012-10-17"
+  #       Statement:
+  #         - Effect: Allow
+  #           Principal:
+  #             Service:
+  #               - codepipeline.amazonaws.com
+  #           Action:
+  #             - sts:AssumeRole
+  #     Path: "/"
+  #     Policies:
+  #       - PolicyName: !Sub ${AWS::StackName}-Pipeline-Execution-Role
+  #         PolicyDocument:
+  #           Version: "2012-10-17"
+  #           Statement:
+  #             - Effect: Allow
+  #               Action: iam:PassRole
+  #               Resource: !Sub "arn:aws:codebuild:${AWS::Region}:${AWS::AccountId}:*"
+  #             - Effect: Allow
+  #               Action:
+  #                 - codebuild:BatchGetBuilds
+  #                 - codebuild:StartBuild
+  #               Resource: !Sub "arn:aws:codebuild:${AWS::Region}:${AWS::AccountId}:*"
+  #             - Effect: Allow
+  #               Action:
+  #                 - codedeploy:CreateApplication
+  #                 - codedeploy:GetApplicationRevision
+  #                 - codedeploy:GetDeployment
+  #                 - codedeploy:GetDeploymentConfig
+  #                 - codedeploy:RegisterApplicationRevision
+  #               Resource: !Sub "arn:aws:codedeploy:${AWS::Region}:${AWS::AccountId}:*"
+  #             - Effect: Allow
+  #               Action:
+  #                 - cloudformation:CreateStack
+  #                 - cloudformation:DeleteStack
+  #                 - cloudformation:DescribeStacks
+  #                 - cloudformation:UpdateStack
+  #                 - cloudformation:CreateChangeSet
+  #                 - cloudformation:DeleteChangeSet
+  #                 - cloudformation:DescribeChangeSet
+  #                 - cloudformation:ExecuteChangeSet
+  #                 - cloudformation:SetStackPolicy
+  #                 - cloudformation:ValidateTemplate
+  #               Resource: !Sub "arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:*"
 
   InfrastructureRole:
     Type: AWS::IAM::Role
@@ -240,11 +292,17 @@ Outputs:
     Export:
       Name: PipelineInfrastructureRoleArn
   
-  PipelineExecutionRoleArn:
-    Value: !GetAtt PipelineExecutionRole.Arn
-    Description: The ARN of the Pipeline Execution Role
+  # PipelineExecutionRoleArn:
+  #   Value: !GetAtt PipelineExecutionRole.Arn
+  #   Description: The ARN of the Pipeline Execution Role
+  #   Export:
+  #     Name: PipelineExecutionRoleArn
+
+  CloudFormationExecutionRoleArn:
+    Value: !GetAtt CloudFormationExecutionRole.Arn
+    Description: The ARN of the Cloud Formation Execution Role
     Export:
-      Name: PipelineExecutionRoleArn
+      Name: CloudFormationExecutionRoleArn
 
   InfrastructureRoleArn:
     Value: !GetAtt InfrastructureRole.Arn

@@ -69,6 +69,7 @@ Resources:
             Effect: Allow
             Action:
               - sts:AssumeRole
+              - iam:GetRole
             Principal:
               Service:
                 - lambda.amazonaws.com
