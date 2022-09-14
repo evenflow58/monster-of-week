@@ -13,6 +13,7 @@ phases:
     commands:
       - echo "building packages"
       - npm run build-all
+      - aws cloudformation package --template-file ../url/template.yaml --s3-bucket $BUILD_OUTPUT_BUCKET --output-template-file ui.yaml
   post_build:
     commands:
       - cd ui/build/_app
@@ -22,3 +23,4 @@ artifacts:
   base-directory: ui/build
   files:
     - '**/*'
+    - ui.yaml

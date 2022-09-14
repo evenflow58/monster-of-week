@@ -85,18 +85,92 @@ Resources:
             OutputArtifacts:
               - Name: BuildOutput
             RunOrder: 1
-        - Name: Deploy
+        - Name: Staging
           Actions:
-          - Name: DeployUiCode
-            ActionTypeId:
-              Category: Deploy
-              Owner: AWS
-              Provider: S3
-              Version: 1
-            RunOrder: 1
-            Configuration:
-              BucketName: !ImportValue UiBucketName
-              Extract: true
-            InputArtifacts:
-              - Name: BuildOutput
-            Region: us-east-1
+            - Name: CreateChangeSet
+              ActionTypeId:
+                Category: Deploy
+                Owner: AWS
+                Provider: CloudFormation
+                Version: 1
+              Configuration:
+                ActionMode: CHANGE_SET_REPLACE
+                RoleArn: !ImportValue PipelineInfrastructureRoleArn
+                StackName: !Sub '${ProjectName}-Stack-Beta'
+                ChangeSetName: !Sub '${ProjectName}-ChangeSet-Beta'
+                TemplatePath: BuildOutput::ui.yaml
+                Capabilities: CAPABILITY_IAM
+                ParameterOverrides: '{ "Stage": "staging" }'
+              InputArtifacts:
+                - Name: BuildOutput
+              RunOrder: 1
+            - Name: ExecuteChangeSet
+              ActionTypeId:
+                Category: Deploy
+                Owner: AWS
+                Provider: CloudFormation
+                Version: 1
+              Configuration:
+                ActionMode: CHANGE_SET_EXECUTE
+                RoleArn: !ImportValue PipelineInfrastructureRoleArn
+                StackName: !Sub '${ProjectName}-Stack-Beta'
+                ChangeSetName: !Sub '${ProjectName}-ChangeSet-Beta'
+              OutputArtifacts:
+                - Name: !Sub '${ProjectName}-ChangeSet-Beta'
+              RunOrder: 2
+        - Name: Production
+          Actions:
+            - Name: DeploymentApproval
+              ActionTypeId:
+                Category: Approval
+                Owner: AWS
+                Provider: Manual
+                Version: 1
+              RunOrder: 1
+            - Name: CreateChangeSet
+              ActionTypeId:
+                Category: Deploy
+                Owner: AWS
+                Provider: CloudFormation
+                Version: 1
+              Configuration:
+                ActionMode: CHANGE_SET_REPLACE
+                RoleArn: !ImportValue PipelineInfrastructureRoleArn
+                StackName: !Sub '${ProjectName}-Stack-Prod'
+                ChangeSetName: !Sub '${ProjectName}-ChangeSet-Prod'
+                TemplatePath: BuildOutput::ui.yaml
+                Capabilities: CAPABILITY_IAM
+                ParameterOverrides: '{ "Stage": "production" }'
+              InputArtifacts:
+                - Name: BuildOutput
+              RunOrder: 2
+            - Name: ExecuteChangeSet
+              ActionTypeId:
+                Category: Deploy
+                Owner: AWS
+                Provider: CloudFormation
+                Version: 1
+              Configuration:
+                ActionMode: CHANGE_SET_EXECUTE
+                RoleArn: !ImportValue PipelineInfrastructureRoleArn
+                StackName: !Sub '${ProjectName}-Stack-Prod'
+                ChangeSetName: !Sub '${ProjectName}-ChangeSet-Prod'
+              OutputArtifacts:
+                - Name: !Sub '${ProjectName}-ChangeSet-Prod'
+              RunOrder: 3
+          
+        # - Name: Deploy
+        #   Actions:
+        #   - Name: DeployUiCode
+        #     ActionTypeId:
+        #       Category: Deploy
+        #       Owner: AWS
+        #       Provider: S3
+        #       Version: 1
+        #     RunOrder: 1
+        #     Configuration:
+        #       BucketName: !ImportValue UiBucketName
+        #       Extract: true
+        #     InputArtifacts:
+        #       - Name: BuildOutput
+        #     Region: us-east-1
