@@ -33,11 +33,11 @@ Mappings:
       Alias: monsterplaybook.rip
 
 Resources:
-  # CloudFrontOriginIdentity:
-  #   Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
-  #   Properties:
-  #     CloudFrontOriginAccessIdentityConfig:
-  #       Comment: 'monster of the week origin identity'
+  CloudFrontOriginIdentity:
+    Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+    Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: 'monster of the week origin identity'
 
   # UiBucketPolicy:
   #   Type: AWS::S3::BucketPolicy
@@ -110,17 +110,17 @@ Resources:
             Cookies:
               Forward: none
           ViewerProtocolPolicy: redirect-to-https
-        # ViewerCertificate:
-        #   AcmCertificateArn: !Ref CloudFronCert
-        #   SslSupportMethod: sni-only
+        ViewerCertificate:
+          AcmCertificateArn: !Ref CloudFronCert
+          SslSupportMethod: sni-only
   
-  # DnsName:
-  #   Type: AWS::Route53::RecordSetGroup
-  #   Properties:
-  #     HostedZoneId: !Ref HostedZoneId
-  #     RecordSets:
-  #     - Name: !Ref DomainName
-  #       Type: A
-  #       AliasTarget:
-  #         HostedZoneId: Z2FDTNDATAQYW2 
-  #         DNSName: !GetAtt CloudFrontDistribution.DomainName
+  DnsName:
+    Type: AWS::Route53::RecordSetGroup
+    Properties:
+      HostedZoneId: !Ref HostedZoneId
+      RecordSets:
+      - Name: !Ref DomainName
+        Type: A
+        AliasTarget:
+          HostedZoneId: Z2FDTNDATAQYW2 
+          DNSName: !GetAtt CloudFrontDistribution.DomainName

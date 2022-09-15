@@ -191,6 +191,11 @@ Resources:
                 Effect: Allow
                 Resource: !Sub "arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:*"
               - Action:
+                  - cloudfront:CreateDistribution
+                  - cloudfront:TagResource
+                Effect: Allow
+                Resource: !Sub "arn:aws:cloudfront::${AWS::AccountId}:distribution/*"
+              - Action:
                   - iam:*
                   # - iam:CreateRole
                   # - iam:DetachRolePolicy
@@ -205,6 +210,11 @@ Resources:
                   - lambda:CreateFunction
                   - lambda:TagResource
                   - lambda:UntagResource
+                  - lambda:GetFunction
+                  - lambda:ListVersionsByFunction
+                  - lambda:PublishVersion
+                  - lambda:CreateAlias
+                  -  lambda:DeleteAlias
                 Effect: Allow
                 Resource: !Sub 'arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:*'
               - Action:

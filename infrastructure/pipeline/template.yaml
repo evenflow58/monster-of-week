@@ -86,8 +86,8 @@ Resources:
             InputArtifacts:
               - Name: SourceCode
             OutputArtifacts:
-              - Name: UiBuildOutput
-              - Name: LambdaEdgeBuildOutput
+              - Name: uiBuildOutput
+              - Name: lambdaEdgeBuildOutput
             RunOrder: 1
         - Name: Staging
           Actions:
@@ -102,11 +102,11 @@ Resources:
                 RoleArn: !ImportValue CloudFormationExecutionRoleArn
                 StackName: !Sub '${AWS::StackName}-Stack-Beta'
                 ChangeSetName: !Sub '${AWS::StackName}-ChangeSet-Beta'
-                TemplatePath: LambdaEdgeBuildOutput::ui.yaml
+                TemplatePath: lambdaEdgeBuildOutput::ui.yaml
                 Capabilities: CAPABILITY_IAM
                 ParameterOverrides: '{ "Stage": "staging" }'
               InputArtifacts:
-                - Name: LambdaEdgeBuildOutput
+                - Name: lambdaEdgeBuildOutput
               RunOrder: 1
             - Name: ExecuteChangeSet
               ActionTypeId:
@@ -142,11 +142,11 @@ Resources:
                 RoleArn: !ImportValue CloudFormationExecutionRoleArn
                 StackName: !Sub '${AWS::StackName}-Stack-Prod'
                 ChangeSetName: !Sub '${AWS::StackName}-ChangeSet-Prod'
-                TemplatePath: LambdaEdgeBuildOutput::ui.yaml
+                TemplatePath: lambdaEdgeBuildOutput::ui.yaml
                 Capabilities: CAPABILITY_IAM
                 ParameterOverrides: '{ "Stage": "production" }'
               InputArtifacts:
-                - Name: LambdaEdgeBuildOutput
+                - Name: lambdaEdgeBuildOutput
               RunOrder: 2
             - Name: ExecuteChangeSet
               ActionTypeId:
