@@ -21,5 +21,13 @@ phases:
 
 artifacts:
   files:
-    - ui/build/**/*
-    - ui.yaml
+    - '*'
+  secondary-artifacts:
+    uiBuildOutput:
+      base-directory: ui/build
+      files:
+          - '**/*'
+    lambdaEdgeBuildOutput:
+      base-directory: infrastructure/url
+      files:
+        - ui.yaml
