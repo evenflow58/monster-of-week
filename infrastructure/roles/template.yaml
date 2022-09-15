@@ -196,6 +196,10 @@ Resources:
                 Effect: Allow
                 Resource: !Sub "arn:aws:cloudfront::${AWS::AccountId}:distribution/*"
               - Action:
+                  - cloudfront:CreateCloudFrontOriginAccessIdentity
+                Effect: Allow
+                Resource: !Sub "arn:aws:cloudfront::${AWS::AccountId}:origin-access-identity/*"
+              - Action:
                   - iam:*
                   # - iam:CreateRole
                   # - iam:DetachRolePolicy
@@ -214,7 +218,7 @@ Resources:
                   - lambda:ListVersionsByFunction
                   - lambda:PublishVersion
                   - lambda:CreateAlias
-                  -  lambda:DeleteAlias
+                  - lambda:DeleteAlias
                 Effect: Allow
                 Resource: !Sub 'arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:*'
               - Action:

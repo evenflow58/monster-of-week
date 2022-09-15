@@ -84,6 +84,13 @@ Resources:
       Timeout: 5
       AutoPublishAlias: live
 
+  EdgeAuthEnableReplicationPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:EnableReplication
+      FunctionName: !Ref LambdaEdge
+      Principal: "*"
+
   CloudFrontDistribution:
     Type: AWS::CloudFront::Distribution
     Properties:
