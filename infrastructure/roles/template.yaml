@@ -191,6 +191,10 @@ Resources:
                 Effect: Allow
                 Resource: !Sub "arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:*"
               - Action:
+                  - lambda:EnableReplication*
+                Effect: Allow
+                Resource: '*'
+              - Action:
                   - cloudfront:CreateDistribution
                   - cloudfront:TagResource
                 Effect: Allow
