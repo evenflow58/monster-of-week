@@ -85,7 +85,7 @@ Resources:
               - Action:
                   - lambda:EnableReplication*
                 Effect: Allow
-                Resource: !GetAtt LambdaEdge.Arn
+                Resource: !Sub arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:*
 
   LambdaEdge:
     Type: AWS::Serverless::Function
