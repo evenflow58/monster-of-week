@@ -26,7 +26,7 @@ artifacts:
     uiBuildOutput:
       base-directory: ui/build
       files:
-          - '**/*'
+        - '**/*'
     lambdaEdgeBuildOutput:
       base-directory: infrastructure/url
       files:
