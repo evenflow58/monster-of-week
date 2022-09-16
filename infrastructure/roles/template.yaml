@@ -223,15 +223,26 @@ Resources:
                   - lambda:PublishVersion
                   - lambda:CreateAlias
                   - lambda:DeleteAlias
+                  - lambda:UpdateFunctionCode
                 Effect: Allow
                 Resource: !Sub 'arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:*'
               - Action:
                   - cloudfront:UpdateDistribution
-                  # - cloudfront:CreateCloudFrontOriginAccessIdentity
                   - cloudfront:GetDistribution
                   - cloudfront:DeleteDistribution
                 Effect: Allow
                 Resource: '*'
+              - Action:
+                  - route53:GetHostedZone
+                  - route53:ChangeResourceRecordSets
+                  - route53:ListResourceRecordSets
+                Effect: Allow
+                Resource: arn:aws:route53:::hostedzone/*
+              - Action:
+                  - route53:GetChange
+                  - route53:GetChangeRequest
+                Effect: Allow
+                Resource: arn:aws:route53:::change/*
               - Action:
                   - s3:GetObject
                 Effect: Allow
