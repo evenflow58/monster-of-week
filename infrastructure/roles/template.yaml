@@ -226,6 +226,13 @@ Resources:
                 Effect: Allow
                 Resource: !Sub 'arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:*'
               - Action:
+                  - cloudfront:UpdateDistribution
+                  # - cloudfront:CreateCloudFrontOriginAccessIdentity
+                  - cloudfront:GetDistribution
+                  - cloudfront:DeleteDistribution
+                Effect: Allow
+                Resource: '*'
+              - Action:
                   - s3:GetObject
                 Effect: Allow
                 Resource:

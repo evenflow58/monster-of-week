@@ -127,13 +127,13 @@ Resources:
           AcmCertificateArn: !Ref CloudFronCert
           SslSupportMethod: sni-only
   
-  # DnsName:
-  #   Type: AWS::Route53::RecordSetGroup
-  #   Properties:
-  #     HostedZoneId: !Ref HostedZoneId
-  #     RecordSets:
-  #     - Name: !Ref DomainName
-  #       Type: A
-  #       AliasTarget:
-  #         HostedZoneId: Z2FDTNDATAQYW2
-  #         DNSName: !GetAtt CloudFrontDistribution.DomainName
+  DnsName:
+    Type: AWS::Route53::RecordSetGroup
+    Properties:
+      HostedZoneId: !Ref HostedZoneId
+      RecordSets:
+      - Name: !Ref DomainName
+        Type: A
+        AliasTarget:
+          HostedZoneId: Z2FDTNDATAQYW2
+          DNSName: !GetAtt CloudFrontDistribution.DomainName
