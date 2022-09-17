@@ -224,6 +224,8 @@ Resources:
                   - lambda:CreateAlias
                   - lambda:DeleteAlias
                   - lambda:UpdateFunctionCode
+                  - lambda:ListTags
+                  - lambda:UpdateAlias
                 Effect: Allow
                 Resource: !Sub 'arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:*'
               - Action:
