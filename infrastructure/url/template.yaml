@@ -14,7 +14,7 @@ Parameters:
     Default: arn:aws:acm:us-east-1:625961017727:certificate/edd15537-9b78-4e21-a100-9ce277ca42bf
   Domain:
     Type: String
-    AllowedPattern: (.*[.]*)monsterplaybook.rip
+    AllowedPattern: (.*[.])*monsterplaybook.rip
 
 Mappings:
   AliasMap:
