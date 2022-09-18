@@ -15,6 +15,7 @@ Parameters:
   Domain:
     Type: String
     # AllowedPattern: (.*[.])*monsterplaybook.rip
+    Default: dev.monsterplaybook.rip
 
 Mappings:
   AliasMap:
