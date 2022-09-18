@@ -12,12 +12,9 @@ Parameters:
   CloudFronCert:
     Type: String
     Default: arn:aws:acm:us-east-1:625961017727:certificate/edd15537-9b78-4e21-a100-9ce277ca42bf
-  Stage:
+  Domain:
     Type: String
-    AllowedValues:
-      - staging
-      - production
-    Default: staging
+    AllowedPattern: (.*[.]*)monsterplaybook.rip
 
 Mappings:
   AliasMap:
@@ -73,7 +70,7 @@ Resources:
     Properties:
       DistributionConfig:
         Aliases:
-          - !FindInMap [AliasMap, !Ref Stage, Alias]
+          - !Ref Domain
         Origins:
           - DomainName: aws.amazon.com
             Id: lambdaEdgeId
@@ -103,7 +100,7 @@ Resources:
     Properties:
       HostedZoneId: !Ref HostedZoneId
       RecordSets:
-      - Name: !FindInMap [AliasMap, !Ref Stage, Alias]
+      - Name: !Ref Domain
         Type: A
         AliasTarget:
           HostedZoneId: Z2FDTNDATAQYW2

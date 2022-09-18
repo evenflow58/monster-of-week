@@ -104,7 +104,7 @@ Resources:
                 ChangeSetName: !Sub '${AWS::StackName}-ChangeSet-Beta'
                 TemplatePath: lambdaEdgeBuildOutput::ui.yaml
                 Capabilities: CAPABILITY_IAM
-                ParameterOverrides: '{ "Stage": "staging" }'
+                ParameterOverrides: '{ "Domain": "staging.monsterplaybook.rip" }'
               InputArtifacts:
                 - Name: lambdaEdgeBuildOutput
               RunOrder: 1
@@ -144,7 +144,7 @@ Resources:
                 ChangeSetName: !Sub '${AWS::StackName}-ChangeSet-Prod'
                 TemplatePath: lambdaEdgeBuildOutput::ui.yaml
                 Capabilities: CAPABILITY_IAM
-                ParameterOverrides: '{ "Stage": "production" }'
+                ParameterOverrides: '{ "Domain": "monsterplaybook.rip" }'
               InputArtifacts:
                 - Name: lambdaEdgeBuildOutput
               RunOrder: 2
