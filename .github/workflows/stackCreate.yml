@@ -10,6 +10,7 @@ jobs:
     packages: write
    steps:
     - name: Branch Names
+      id: branch-name
       uses: tj-actions/branch-names@v6.1
     - name: Exporting branch name
       run: echo "Branch name ${{ steps.branch-name.outputs.current_branch }}"
