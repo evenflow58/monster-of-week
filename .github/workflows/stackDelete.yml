@@ -8,6 +8,8 @@ jobs:
   build:
    runs-on: ubuntu-latest
    steps:
+    - name: Branch Names
+      uses: tj-actions/branch-names@v6.1
     - uses: actions/checkout@v2
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -21,4 +23,4 @@ jobs:
        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       with:
-       args: cloudformation delete-stack --stack-name pipeline-stack-${GITHUB_REF##*/}
+       args: cloudformation delete-stack --stack-name pipeline-stack-${{ steps.branch-name.outpus.current_branch }}
