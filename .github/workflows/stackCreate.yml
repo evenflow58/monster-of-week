@@ -22,6 +22,6 @@ jobs:
     - name: Deploy to AWS CloudFormation
       uses: aws-actions/aws-cloudformation-github-deploy@v1
       with:
-        name: pipeline-stack-${{ steps.branch-name.outpus.current_branch }}
+        name: pipeline-stack-${{ steps.branch-name.outputs.current_branch }}
         template: infrastructure/pipeline/template.yaml
-        parameter-overrides: GitHubBranch=${{ steps.branch-name.outpus.current_branch }}
+        parameter-overrides: GitHubBranch=${{ steps.branch-name.outputs.current_branch }}
