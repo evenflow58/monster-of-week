@@ -11,6 +11,8 @@ jobs:
    steps:
     - name: Branch Names
       uses: tj-actions/branch-names@v6.1
+    - name: Exporting branch name
+      run: echo "Branch name ${{ steps.branch-name.outputs.current_branch }}"
     - name: Checkout repository
       uses: actions/checkout@v2
     - name: Configure AWS Credentials
