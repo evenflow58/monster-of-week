@@ -11,4 +11,4 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         FunctionName: CreatePipeline
-        Payload: '{ "BranchName": ${{ github.head_ref || github.ref_name }} }'
+        Payload: '{ "BranchName": "${{ github.head_ref || github.ref_name }}" }'
