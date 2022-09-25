@@ -1,5 +1,5 @@
 name: Create pipeline
-on: [create]
+on: [pull_request]
 jobs:
   CreatePipelineLamda:
    runs-on: ubuntu-latest
