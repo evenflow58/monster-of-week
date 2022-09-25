@@ -1,0 +1,23 @@
+{
+  "name": "createpipelinelambda",
+  "version": "1.0.0",
+  "description": "A lambda to create a pipeline on a github action",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "deploy": "npm run build && cd ./infrastructure && sam build && sam deploy --capabilities CAPABILITY_NAMED_IAM && cd ../",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.106",
+    "@types/node": "^18.7.19",
+    "aws-lambda": "^1.0.7",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.3"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1223.0"
+  }
+}
