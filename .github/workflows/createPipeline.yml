@@ -6,7 +6,8 @@ jobs:
   CreatePipelineLamda:
    runs-on: ubuntu-latest
    steps:
-    - run: echo $GITHUB_WORKSPACE
+    - name: Check workspace
+      run: echo $GITHUB_WORKSPACE
     - name: Invoke create pipeline lambda
       uses: gagoar/invoke-aws-lambda@master
       with:
