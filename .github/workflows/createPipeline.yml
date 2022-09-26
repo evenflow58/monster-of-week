@@ -7,7 +7,7 @@ jobs:
    runs-on: ubuntu-latest
    steps:
     - name: Check workspace
-      run: echo "${{ github.server_url }}/${{ github.repository }}"
+      run: echo "${{ github.server_url }}/${{ github.repository }}/tree/${{ github.head_ref || github.ref_name }}/infrastructure/pipeline/template.yaml4"
     - name: Invoke create pipeline lambda
       uses: gagoar/invoke-aws-lambda@master
       with:
