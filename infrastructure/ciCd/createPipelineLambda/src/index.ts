@@ -5,19 +5,20 @@ import {
 } from "@aws-sdk/client-cloudformation";
 
 export const handler = async (event: { BranchName: string }): Promise<any> => {
-  if (event.BranchName === "master") {
+  const branchName = event.BranchName;
+  if (branchName === "master") {
     console.log("Not creating anything because this is the master branch.");
     return;
   }
 
   const client = new CloudFormationClient({ region: "us-east-1" });
   const input: CreateStackCommandInput = {
-    StackName: `monster-week-${event.BranchName}`,
-    TemplateURL: `https://github.com/evenflow58/monster-of-week/tree/master/infrastructure/pipeline/template.yaml`,
+    StackName: `monster-week-${branchName}`,
+    TemplateURL: `https://github.com/evenflow58/monster-of-week/blob/${branchName}/infrastructure/ciCd/createPipelineLambda/infrastructure/template.yaml`,
     Parameters: [
       {
         ParameterKey: "BranchName",
-        ParameterValue: event.BranchName,
+        ParameterValue: branchName,
         UsePreviousValue: false,
       },
     ],
@@ -26,7 +27,7 @@ export const handler = async (event: { BranchName: string }): Promise<any> => {
   };
   const command = new CreateStackCommand(input);
 
-  console.log(`Creating environment for ${event.BranchName}`);
+  console.log(`Creating environment for ${branchName}`);
 
   return await client.send(command);
 };
