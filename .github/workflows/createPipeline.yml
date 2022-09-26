@@ -7,7 +7,7 @@ jobs:
    runs-on: ubuntu-latest
    steps:
     - name: Check workspace
-      run: echo "${{ GITHUB_SERVER_URL }}/${{ GITHUB_REPOSITORY }}"
+      run: echo "${{ github.server_url }}/${{ github.repository }}"
     - name: Invoke create pipeline lambda
       uses: gagoar/invoke-aws-lambda@master
       with:
