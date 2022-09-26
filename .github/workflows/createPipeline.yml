@@ -1,12 +1,17 @@
 name: Create pipeline
-on: [create]
+on:
+  workflow_dispatch: {}
+  pull_request: {}
 jobs:
   CreatePipelineLamda:
    runs-on: ubuntu-latest
    steps:
+    - name: Check workspace
+      run: echo "${{ github.server_url }}/${{ github.repository }}/tree/${{ github.head_ref || github.ref_name }}/infrastructure/pipeline/template.yaml4"
     - name: Invoke create pipeline lambda
       uses: gagoar/invoke-aws-lambda@master
       with:
-        AWS_ACESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         FunctionName: CreatePipeline
+        Payload: '{ "BranchName": "${{ github.head_ref || github.ref_name }}" }'
