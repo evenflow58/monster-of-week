@@ -6,10 +6,19 @@ jobs:
   CreatePipelineLamda:
    runs-on: ubuntu-latest
    steps:
+    - name: Upload pipeline template to S3 bucket
+      uses: shallwefootball/s3-upload-action@master
+      id: templateUpload
+      with:
+        aws_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws_bucket: ${{ secrets.AWS_BUCKET }}
+        source_dir: 'infrastructure/ciCd/createPipelineLambda/infrastructure/template.yaml'
+        destination_dir: ''
     - name: Invoke create pipeline lambda
       uses: gagoar/invoke-aws-lambda@master
       with:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         FunctionName: CreatePipeline
-        Payload: '{ "BranchName": "${{ github.head_ref || github.ref_name }}", "TemplateUrl": "${{ github.server_url }}/${{ github.repository }}/tree/${{ github.head_ref || github.ref_name }}/infrastructure/pipeline/template.yaml" }'
+        Payload: '{ "BranchName": "${{ github.head_ref || github.ref_name }}", "TemplateUrl": "${{ steps.templateUpload.outputs.object_locations }}" }'

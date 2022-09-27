@@ -8,6 +8,8 @@ export const handler = async (event: {
   BranchName: string;
   TemplateUrl: string;
 }): Promise<any> => {
+  console.log("event", event);
+
   const branchName = event.BranchName;
   if (branchName === "master") {
     console.log("Not creating anything because this is the master branch.");
