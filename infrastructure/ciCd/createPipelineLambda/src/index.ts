@@ -24,7 +24,6 @@ export const handler = async (event: {
       {
         ParameterKey: "BranchName",
         ParameterValue: branchName,
-        UsePreviousValue: false,
       },
     ],
     OnFailure: "ROLLBACK",
