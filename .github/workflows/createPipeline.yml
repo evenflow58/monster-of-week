@@ -13,7 +13,7 @@ jobs:
         aws_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws_bucket: ${{ secrets.AWS_BUCKET }}
-        source_dir: 'infrastructure/ciCd/createPipelineLambda/infrastructure/template.yaml'
+        source_dir: 'infrastructure/ciCd/createPipelineLambda/infrastructure'
         destination_dir: ''
     - name: Invoke create pipeline lambda
       uses: gagoar/invoke-aws-lambda@master
