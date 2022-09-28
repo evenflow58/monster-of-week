@@ -22,7 +22,7 @@ export const handler = async (event: {
     TemplateURL: event.TemplateUrl,
     Parameters: [
       {
-        ParameterKey: "BranchName",
+        ParameterKey: "GitHubBranch",
         ParameterValue: branchName,
       },
     ],

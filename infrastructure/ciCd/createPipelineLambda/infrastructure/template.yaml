@@ -7,6 +7,7 @@ Resources:
     Type: AWS::IAM::Role
     Properties:
       RoleName: CreatePipelineLambdaRole
+      Path: /
       AssumeRolePolicyDocument:
         Version: 2012-10-17
         Statement:
@@ -21,8 +22,20 @@ Resources:
         - arn:aws:iam::aws:policy/AWSCloudFormationFullAccess
         - arn:aws:iam::aws:policy/AWSCodePipelineFullAccess
         - arn:aws:iam::aws:policy/service-role/AWSAppSyncPushToCloudWatchLogs
-      Path: /
-
+      Policies:
+      - PolicyName: create-pipeline-lambda-policy
+        PolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+          - Effect: Allow
+            Action:
+              - iam:*
+            Resource: !Sub "arn:aws:iam::${AWS::AccountId}:role/monster-of-the-week-roles-*"
+          - Effect: Allow
+            Action:
+              - codebuild:DeleteProject
+            Resource: !Sub "arn:aws:codebuild:us-east-1:${AWS::AccountId}:project/monster-week-test-events-*"
+      
   CreatePipelineLamda:
    Type: AWS::Serverless::Function
    Properties:
