@@ -18,6 +18,8 @@ Resources:
             Action:
               - sts:AssumeRole
       ManagedPolicyArns:
+        # - arn:aws:iam::aws:policy/AdministratorAccess
+      # TODO: Figure out what permission is missing. The pipeline is failing to create so it's like like a pipeline:* permission
         - arn:aws:iam::aws:policy/AWSLambda_FullAccess
         - arn:aws:iam::aws:policy/AWSCloudFormationFullAccess
         - arn:aws:iam::aws:policy/AWSCodePipelineFullAccess
@@ -35,6 +37,10 @@ Resources:
             Action:
               - codebuild:DeleteProject
             Resource: !Sub "arn:aws:codebuild:us-east-1:${AWS::AccountId}:project/monster-week-test-events-*"
+          - Effect: Allow
+            Action:
+              - codepipeline:*
+            Resource: *
       
   CreatePipelineLamda:
    Type: AWS::Serverless::Function
