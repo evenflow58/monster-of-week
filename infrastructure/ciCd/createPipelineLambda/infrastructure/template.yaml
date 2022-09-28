@@ -40,7 +40,7 @@ Resources:
           - Effect: Allow
             Action:
               - codepipeline:*
-            Resource: *
+            Resource: "*"
       
   CreatePipelineLamda:
    Type: AWS::Serverless::Function
