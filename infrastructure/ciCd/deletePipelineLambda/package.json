@@ -1,7 +1,7 @@
 {
-  "name": "createpipelinelambda",
+  "name": "deletepipelinelambda",
   "version": "1.0.0",
-  "description": "A lambda to create a pipeline on a github action",
+  "description": "Deletes a pipeline stack on a Github workflow",
   "main": "index.js",
   "scripts": {
     "build": "tsc",

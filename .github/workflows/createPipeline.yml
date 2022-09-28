@@ -1,16 +1,15 @@
 name: Create pipeline
 on:
   workflow_dispatch: {}
-  pull_request: {}
+  pull_request:
+      types:
+        - opened
 jobs:
   CreatePipelineLamda:
    runs-on: ubuntu-latest
    steps:
     - name: Checkout branch
       uses: actions/checkout@master
-    # - name: Set branch name
-    #   id: branch
-    #   run:  echo "::set-output name=${{ github.head_ref || github.ref_name }}"
     - name: Upload pipeline template to S3 bucket
       uses: jakejarvis/s3-sync-action@master
       id: templateUpload
