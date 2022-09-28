@@ -110,7 +110,7 @@ Resources:
               OutputArtifacts:
                 - Name: !Sub '${AWS::StackName}-ChangeSet-Dev'
               RunOrder: 2
-        - Name: !If [IsProduction, 'Staging', !Ref BranchName]
+        - Name: !If [IsProduction, 'Staging', !Ref GitHubBranch]
           Actions:
             - Name: CreateChangeSet
               ActionTypeId:
@@ -127,7 +127,7 @@ Resources:
                 Capabilities: CAPABILITY_IAM
                 ParameterOverrides: !Sub
                   - '{ "Domain": "${SubDomain}.monsterplaybook.rip" }'
-                  - SubDomain: !If [IsProduction, 'staging', !Ref BranchName]
+                  - SubDomain: !If [IsProduction, 'staging', !Ref GitHubBranch]
               InputArtifacts:
                 - Name: lambdaEdgeBuildOutput
               RunOrder: 1
