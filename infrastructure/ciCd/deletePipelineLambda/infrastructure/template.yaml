@@ -3,10 +3,10 @@ Transform: AWS::Serverless-2016-10-31
 Description: Create infrastructure for branch deployments
 
 Resources:
-  CreatePipelineLambdaRole:
+  DeletePipelineLambdaRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: CreatePipelineLambdaRole
+      RoleName: DeletePipelineLambdaRole
       Path: /
       AssumeRolePolicyDocument:
         Version: 2012-10-17
@@ -40,13 +40,13 @@ Resources:
               - codepipeline:*
             Resource: "*"
       
-  CreatePipelineLamda:
+  DeletePipelineLamda:
    Type: AWS::Serverless::Function
    Properties:
-    FunctionName: CreatePipeline
-    Description: A lambda used to create stacks for lower environments
+    FunctionName: DeletePipeline
+    Description: A lambda used to delete stacks for lower environments
     Handler: index.handler
-    Role: !GetAtt CreatePipelineLambdaRole.Arn
+    Role: !GetAtt DeletePipelineLambdaRole.Arn
     Runtime: nodejs16.x
     CodeUri: ../dist
     AutoPublishAlias: live

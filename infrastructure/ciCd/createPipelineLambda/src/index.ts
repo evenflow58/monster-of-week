@@ -1,33 +1,34 @@
 import {
   CloudFormationClient,
-  CreateStackCommand,
-  CreateStackCommandInput,
+  DeleteStackCommand,
+  DeleteStackCommandInput,
 } from "@aws-sdk/client-cloudformation";
 
 export const handler = async (event: { BranchName: string }): Promise<any> => {
+  console.log("event", event);
+
   const branchName = event.BranchName;
   if (branchName === "master") {
-    console.log("Not creating anything because this is the master branch.");
+    console.log("Not deleting anything because this is the master branch.");
     return;
   }
 
   const client = new CloudFormationClient({ region: "us-east-1" });
-  const input: CreateStackCommandInput = {
-    StackName: `monster-week-${branchName}`,
-    TemplateURL: `https://github.com/evenflow58/monster-of-week/blob/${branchName}/infrastructure/ciCd/createPipelineLambda/infrastructure/template.yaml`,
-    Parameters: [
-      {
-        ParameterKey: "BranchName",
-        ParameterValue: branchName,
-        UsePreviousValue: false,
-      },
-    ],
-    OnFailure: "ROLLBACK",
-    Capabilities: ["CAPABILITY_NAMED_IAM"],
+
+  const deleteDeployInput: DeleteStackCommandInput = {
+    StackName: `monster-week-${branchName}-Stack-Beta`,
   };
-  const command = new CreateStackCommand(input);
+  const deleteDeployCommand = new DeleteStackCommand(deleteDeployInput);
 
-  console.log(`Creating environment for ${branchName}`);
+  const deletePipelineInput: DeleteStackCommandInput = {
+    StackName: `monster-week-${branchName}`,
+  };
+  const deletePipelineCommand = new DeleteStackCommand(deletePipelineInput);
 
-  return await client.send(command);
+  console.log(`Deleting environment for ${branchName}`);
+
+  return await Promise.all([
+    client.send(deleteDeployCommand),
+    client.send(deletePipelineCommand),
+  ]);
 };
