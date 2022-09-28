@@ -1,4 +1,4 @@
-name: Create pipeline
+name: Delete pipeline
 on:
   workflow_dispatch: {}
   delete: {}
