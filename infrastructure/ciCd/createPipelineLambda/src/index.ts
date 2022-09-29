@@ -1,34 +1,37 @@
 import {
   CloudFormationClient,
-  DeleteStackCommand,
-  DeleteStackCommandInput,
+  CreateStackCommand,
+  CreateStackCommandInput,
 } from "@aws-sdk/client-cloudformation";
 
-export const handler = async (event: { BranchName: string }): Promise<any> => {
+export const handler = async (event: {
+  BranchName: string;
+  TemplateUrl: string;
+}): Promise<any> => {
   console.log("event", event);
 
   const branchName = event.BranchName;
   if (branchName === "master") {
-    console.log("Not deleting anything because this is the master branch.");
+    console.log("Not creating anything because this is the master branch.");
     return;
   }
 
   const client = new CloudFormationClient({ region: "us-east-1" });
-
-  const deleteDeployInput: DeleteStackCommandInput = {
-    StackName: `monster-week-${branchName}-Stack-Beta`,
-  };
-  const deleteDeployCommand = new DeleteStackCommand(deleteDeployInput);
-
-  const deletePipelineInput: DeleteStackCommandInput = {
+  const input: CreateStackCommandInput = {
     StackName: `monster-week-${branchName}`,
+    TemplateURL: event.TemplateUrl,
+    Parameters: [
+      {
+        ParameterKey: "GitHubBranch",
+        ParameterValue: branchName,
+      },
+    ],
+    OnFailure: "ROLLBACK",
+    Capabilities: ["CAPABILITY_NAMED_IAM"],
   };
-  const deletePipelineCommand = new DeleteStackCommand(deletePipelineInput);
+  const command = new CreateStackCommand(input);
 
-  console.log(`Deleting environment for ${branchName}`);
+  console.log(`Creating environment for ${branchName}`);
 
-  return await Promise.all([
-    client.send(deleteDeployCommand),
-    client.send(deletePipelineCommand),
-  ]);
+  return await client.send(command);
 };
