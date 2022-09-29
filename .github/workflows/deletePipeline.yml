@@ -1,9 +1,9 @@
 name: Delete pipeline
 on:
   workflow_dispatch: {}
-  push:
-    branches:
-      - master
+  pull_request:
+      types:
+          - closed
 jobs:
   DeletePipelineLamda:
    runs-on: ubuntu-latest
