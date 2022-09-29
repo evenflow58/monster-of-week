@@ -1,12 +1,14 @@
 name: Delete pipeline
 on:
   workflow_dispatch: {}
-  delete: {}
+  pull_request:
+      types:
+          - closed
 jobs:
   DeletePipelineLamda:
    runs-on: ubuntu-latest
    steps:
-    - name: Invoke create pipeline lambda
+    - name: Invoke delete pipeline lambda
       uses: gagoar/invoke-aws-lambda@master
       with:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
