@@ -5,7 +5,7 @@
 // } from "@aws-sdk/client-s3";
 
 export const handler = async (event: any): Promise<any> => {
-  console.log(event);
+  console.log(event.Records[0].cf);
 
   // const input: GetObjectCommandInput = {
   //   Bucket: "monster-of-the-week-ui",
