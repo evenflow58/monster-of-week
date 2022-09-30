@@ -11,10 +11,10 @@
   },
   "scripts": {
     "lint-all": "prettier --check packages/**/**/*.ts && prettier --check packages/**/**/*.json",
-    "install-all": "npm-run-all --parallel install:*",
+    "install-all": "npm-run-all --parallel install:* && cd ../",
     "install:ui": "cd ui && npm i",
     "install:edge": "cd url && npm i",
-    "build-all": "npm-run-all --parallel build:*",
+    "build-all": "npm-run-all --parallel build:* && cd ../",
     "build:ui": "cd ui && npm run build",
     "build:edge": "cd url && npm run build",
     "test-all": "npm-run-all --parallel test:*",
