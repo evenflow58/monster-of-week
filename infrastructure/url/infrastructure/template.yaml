@@ -58,7 +58,7 @@ Resources:
   LambdaEdge:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: index.js
+      CodeUri: ../dist
       Role: !GetAtt LambdaEdgeRole.Arn
       Runtime: nodejs16.x
       Handler: index.handler
