@@ -14,10 +14,10 @@ phases:
       - echo "building packages"
       - npm run build-all
       - cd infrastructure/url/
-      - aws cloudformation package --template-file infrastructure/template.yaml --s3-bucket $BUILD_OUTPUT_BUCKET --output-template-file infrastructure/ui/infrastructre/ui.yaml
+      - npm run package-all
   post_build:
     commands:
-      - cd infrastructure/url
+      - cd url
       - ls -a
 
 artifacts:

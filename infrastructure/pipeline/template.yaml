@@ -106,7 +106,7 @@ Resources:
                 RoleArn: !ImportValue CloudFormationExecutionRoleArn
                 StackName: !Sub '${AWS::StackName}-Stack-Beta'
                 ChangeSetName: !Sub '${AWS::StackName}-ChangeSet-Beta'
-                TemplatePath: lambdaEdgeBuildOutput::ui.yaml
+                TemplatePath: lambdaEdgeBuildOutput::infrastructure/template.yaml
                 Capabilities: CAPABILITY_IAM
                 ParameterOverrides: !Sub
                   - '{ "Domain": "${SubDomain}.monsterplaybook.rip" }'
