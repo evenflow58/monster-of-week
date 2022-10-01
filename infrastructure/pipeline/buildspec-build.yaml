@@ -13,7 +13,7 @@ phases:
     commands:
       - echo "building packages"
       - npm run build-all
-      - cd infrastructure/url/
+      - echo "packaging packages"
       - npm run package-all
   post_build:
     commands:
