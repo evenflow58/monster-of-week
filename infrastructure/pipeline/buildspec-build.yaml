@@ -13,13 +13,8 @@ phases:
     commands:
       - echo "building packages"
       - npm run build-all
-      - echo $S3_BUCKET
       - echo "packaging packages"
       - npm run package-all
-  post_build:
-    commands:
-      - cd infrastructure/url
-      - ls -a
 
 artifacts:
   files:
