@@ -18,7 +18,8 @@
     "build:ui": "cd ui && npm run build",
     "build:edge": "cd infrastructure/url && npm run build",
     "test-all": "npm-run-all --parallel test:*",
-    "package-all": "npm-run-all --parallel package:*"
+    "package-all": "npm-run-all --parallel package:*",
+    "package:edge": "cd infrastructure/url && npm run package"
   },
   "repository": {
     "type": "git",
