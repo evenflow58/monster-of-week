@@ -18,7 +18,6 @@ phases:
       - npm run package-all
   post_build:
     commands:
-      - cd url
       - ls -a
 
 artifacts:

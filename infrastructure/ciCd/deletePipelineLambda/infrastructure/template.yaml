@@ -34,7 +34,7 @@ Resources:
           - Effect: Allow
             Action:
               - codebuild:DeleteProject
-            Resource: !Sub "arn:aws:codebuild:us-east-1:${AWS::AccountId}:project/monster-week-test-events-*"
+            Resource: !Sub "arn:aws:codebuild:us-east-1:${AWS::AccountId}:project/monster-week-*"
           - Effect: Allow
             Action:
               - codepipeline:*
