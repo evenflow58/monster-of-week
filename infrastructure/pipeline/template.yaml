@@ -28,6 +28,8 @@ Resources:
         EnvironmentVariables:
           - Name: BUILD_OUTPUT_BUCKET
             Value: !ImportValue ArtifactBucketId
+          - Name: S3_BUCKET
+            Value: !ImportValue ArtifactBucketId
       ServiceRole: !ImportValue BuildExecutionRoleArn
       Source:
         Type: CODEPIPELINE
