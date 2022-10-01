@@ -30,4 +30,4 @@ artifacts:
     lambdaEdgeBuildOutput:
       base-directory: infrastructure/url
       files:
-        - ui.yaml
+        - '**/*'
