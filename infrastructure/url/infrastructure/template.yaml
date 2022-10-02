@@ -54,6 +54,10 @@ Resources:
                   - lambda:EnableReplication*
                 Effect: Allow
                 Resource: '*'
+              - Action:
+                  - s3:*
+                Effect: Allow
+                Resource: "*"
 
   LambdaEdge:
     Type: AWS::Serverless::Function
