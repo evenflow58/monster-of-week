@@ -14,7 +14,7 @@ Resources:
       BucketEncryption:
         ServerSideEncryptionConfiguration:
           - ServerSideEncryptionByDefault:
-              SSEAlgorithm: AWS256
+              SSEAlgorithm: AES256
 
 Outputs:
   UiBucketName:
