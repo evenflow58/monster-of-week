@@ -9,7 +9,7 @@ export const handler = async (event: any): Promise<any> => {
 
   const request = event.Records[0].cf.request;
 
-  console.log("request", request);
+  console.log("uri", request.uri);
 
   // const input: GetObjectCommandInput = {
   //   Bucket: "monster-of-the-week-ui",
