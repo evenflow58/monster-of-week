@@ -98,6 +98,12 @@ Resources:
         ViewerCertificate:
           AcmCertificateArn: !Ref CloudFronCert
           SslSupportMethod: sni-only
+
+  LogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      RetentionInDays: 14
+      LogGroupName: !Join ["", ["/aws/lambda/", !Ref LambdaEdge]]
   
   DnsName:
     Type: AWS::Route53::RecordSetGroup

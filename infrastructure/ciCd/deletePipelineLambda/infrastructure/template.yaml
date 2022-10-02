@@ -51,3 +51,9 @@ Resources:
     CodeUri: ../dist
     AutoPublishAlias: live
     Timeout: 300
+
+  LogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      RetentionInDays: 14
+      LogGroupName: !Join ["", ["/aws/lambda/", !Ref DeletePipelineLamda]]
