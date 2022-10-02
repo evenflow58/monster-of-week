@@ -5,11 +5,11 @@ import {
 } from "@aws-sdk/client-s3";
 
 export const handler = async (event: any): Promise<any> => {
-  console.log(JSON.stringify(event.Records[0].cf.request));
+  console.log(JSON.stringify(event));
 
   const input: GetObjectCommandInput = {
     Bucket: "monster-of-the-week-ui",
-    Key: "serve-site-from-edge-lambda/",
+    Key: "serve-site-from-edge-lambda/index.html",
   };
   const command = new GetObjectCommand(input);
   const client = new S3Client({ region: "us-east-1" });
@@ -18,7 +18,7 @@ export const handler = async (event: any): Promise<any> => {
 
   const files = await client.send(command);
 
-  console.log("got files");
+  console.log("got files", JSON.stringify(files));
 
   const response = {
     status: 200,

@@ -178,6 +178,11 @@ Resources:
                 Effect: Allow
                 Resource: !Sub 'arn:aws:cloudformation:${AWS::Region}:aws:transform/*'
               - Action:
+                  - logs:CreateLogGroup
+                  - logs:PutRetentionPolicy
+                Effect: Allow
+                Resource: !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/*'
+              - Action:
                   - cloudformation:CreateStack
                   - cloudformation:DeleteStack
                   - cloudformation:DescribeStacks
