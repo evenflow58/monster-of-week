@@ -4,6 +4,8 @@
 //   GetObjectCommandInput,
 // } from "@aws-sdk/client-s3";
 
+import path from "path";
+
 export const handler = async (event: any): Promise<any> => {
   console.log(JSON.stringify(event));
 
@@ -30,18 +32,12 @@ export const handler = async (event: any): Promise<any> => {
 
   // return response;
 
-  return {
-    status: "301",
-    statusDescription: "Found",
-    headers: {
-      location: [
-        {
-          key: "Location",
-          value: `https://${"serve-site-from-edge-lambda.monsterplaybook.rip"}/${
-            request.uri
-          }`,
-        },
-      ],
-    },
-  };
+  if (!path.extname(request.uri)) {
+    console.log("changing path");
+    request.uri = request.uri.replace(/\/?$/, "/index.html");
+  }
+
+  console.log("uri", request.uri);
+
+  return request;
 };
