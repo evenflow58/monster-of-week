@@ -15,9 +15,6 @@ Parameters:
   Domain:
     Type: String
     AllowedPattern: (.*[.])*monsterplaybook.rip
-  BucketName:
-    Type: String
-    Default: monster-of-the-week-ui
 
 Mappings:
   AliasMap:
@@ -109,7 +106,7 @@ Resources:
         Enabled: true
         HttpVersion: http2
         Origins:
-          - DomainName: !Join ["", [!Ref UiBucket, ".s3.amazonaws.com"]]
+          - DomainName: !Join ["", [!ImportValue UiBucketName, ".s3.amazonaws.com"]]
             Id: ui-bucket
             S3OriginConfig:
               OriginAccessIdentity: !Join ["", ["origin-access-identity/cloudfront/", !Ref CloudFrontOAI]]
@@ -133,54 +130,16 @@ Resources:
           DNSName: !GetAtt CloudFrontDistribution.DomainName
 
   ##################### Bucket
-
-  UiBucket:
-    Type: AWS::S3::Bucket
-    Properties:
-      BucketName: !Ref BucketName
-      BucketEncryption:
-        ServerSideEncryptionConfiguration:
-          - ServerSideEncryptionByDefault:
-              SSEAlgorithm: AWS256
-
   UiBucketPolicy:
     Type: AWS::S3::BucketPolicy
     Properties:
-      Bucket: !Ref TheBucket
+      Bucket: !ImportValue UiBucketName
       PolicyDocument:
         Statement:
           -
             Action:
               - s3:GetObject
             Effect: Allow
-            Resource: !Join [ "", [ "arn:aws:s3:::", !Ref UiBucket, "/*" ] ]
+            Resource: !Join [ "", [ "arn:aws:s3:::", !ImportValue UiBucketName, "/*" ] ]
             Principal:
               CanonicalUser: !GetAtt CloudFrontOAI.S3CanonicalUserId
-      
-Outputs:
-  UiBucketName:
-    Value: !Ref UiBucket
-    Description: The name of the UI bucket
-    Export:
-      Name: UiBucketName
-  UiBucketArn:
-    Value: !GetAtt UiBucket.Arn
-    Description: The arn of the UI bucket
-    Export:
-      Name: UiBucketArn
-  WebsiteURL:
-    Value: !GetAtt UiBucket.WebsiteURL
-    Description: URL for website hosted on S3
-    Export:
-      Name: WebsiteURL
-  UiBucketDomainName:
-    Value: !GetAtt UiBucket.DomainName
-    Description: The domain name of the UI bucket.
-    Export:
-      Name: UiBucketDomainName
-  S3BucketSecureURL:
-    Value: !Join
-      - ''
-      - - 'https://'
-        - !GetAtt UiBucket.DomainName
-    Description: Name of S3 bucket to hold website content

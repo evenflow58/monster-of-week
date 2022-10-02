@@ -180,6 +180,7 @@ Resources:
               - Action:
                   - logs:CreateLogGroup
                   - logs:PutRetentionPolicy
+                  - logs:DeleteLogGroup
                 Effect: Allow
                 Resource: !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/*'
               - Action:
