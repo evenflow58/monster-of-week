@@ -13,6 +13,8 @@ export const handler = async (event: any): Promise<any> => {
 
   console.log("uri", request.uri);
 
+  return request;
+
   // const input: GetObjectCommandInput = {
   //   Bucket: "monster-of-the-week-ui",
   //   Key: "serve-site-from-edge-lambda/index.html",
@@ -32,14 +34,14 @@ export const handler = async (event: any): Promise<any> => {
 
   // return response;
 
-  if (!path.extname(request.uri)) {
-    console.log("changing path");
-    request.uri = request.uri.replace(/\/?$/, "/index.html");
-  }
+  // if (!path.extname(request.uri)) {
+  //   console.log("changing path");
+  //   request.uri = request.uri.replace(/\/?$/, "/index.html");
+  // }
 
-  request.uri = `serve-site-from-edge-lambda${request.uri}`;
+  // request.uri = `serve-site-from-edge-lambda${request.uri}`;
 
-  console.log("uri", request.uri);
+  // console.log("uri", request.uri);
 
-  return request;
+  // return request;
 };
