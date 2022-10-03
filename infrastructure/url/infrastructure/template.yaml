@@ -103,11 +103,6 @@ Resources:
             - EventType: origin-request
               LambdaFunctionARN: !Ref LambdaEdge.Version
         DefaultRootObject: index.html
-        CustomErrorResponses:
-          - ErrorCachingMinTTL: 300
-            ErrorCode: 403
-            ResponseCode: 404
-            ResponsePagePath: /404.html
         Enabled: true
         HttpVersion: http2
         Origins:

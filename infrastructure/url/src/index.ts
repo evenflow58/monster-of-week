@@ -11,9 +11,7 @@ export const handler = async (event: any): Promise<any> => {
 
   const request = event.Records[0].cf.request;
 
-  console.log("uri", request.uri);
-
-  return request;
+  console.log("original uri", request.uri);
 
   // const input: GetObjectCommandInput = {
   //   Bucket: "monster-of-the-week-ui",
@@ -34,14 +32,16 @@ export const handler = async (event: any): Promise<any> => {
 
   // return response;
 
-  // if (!path.extname(request.uri)) {
-  //   console.log("changing path");
-  //   request.uri = request.uri.replace(/\/?$/, "/index.html");
-  // }
+  if (!path.extname(request.uri)) {
+    console.log("changing path");
+    request.uri = request.uri.replace(/\/?$/, "/index.html");
+  }
 
-  // request.uri = `serve-site-from-edge-lambda${request.uri}`;
+  console.log("new URI", request.uri);
 
-  // console.log("uri", request.uri);
+  request.uri = `serve-site-from-edge-lambda${request.uri}`;
 
-  // return request;
+  console.log("finished uri", request.uri);
+
+  return request;
 };
