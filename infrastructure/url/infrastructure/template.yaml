@@ -106,7 +106,7 @@ Resources:
           LambdaFunctionAssociations:
             - EventType: origin-request
               LambdaFunctionARN: !Ref LambdaEdge.Version
-        DefaultRootObject: !Join ["", ["", !Ref BranchName, "/", index.html]]
+        # DefaultRootObject: !Join ["", ["", !Ref BranchName, "/", index.html]]
         Enabled: true
         HttpVersion: http2
         Origins:
