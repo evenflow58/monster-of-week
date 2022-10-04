@@ -37,7 +37,7 @@ export const handler = async (event: any): Promise<any> => {
 
   console.log("new URI", request.uri);
 
-  request.uri = `serve-site-from-edge-lambda${request.uri}`;
+  request.uri = `/serve-site-from-edge-lambda${request.uri}`;
 
   console.log("finished uri", request.uri);
 
