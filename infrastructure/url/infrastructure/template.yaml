@@ -145,5 +145,4 @@ Resources:
             Resource: !Sub
               - "${BucketArn}/*"
               - BucketArn: !ImportValue UiBucketArn
-            Principal:
-              Service: cloudfront.amazonaws.com
+            Principal: "*"
