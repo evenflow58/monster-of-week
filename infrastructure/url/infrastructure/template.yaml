@@ -42,6 +42,8 @@ Resources:
                 - lambda.amazonaws.com
                 - edgelambda.amazonaws.com
       Path: /
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
       Policies:
         - PolicyName: EdgeLambdaPolicy
           PolicyDocument:
@@ -101,9 +103,9 @@ Resources:
               Forward: none
           TargetOriginId: ui-bucket
           ViewerProtocolPolicy: redirect-to-https
-          # LambdaFunctionAssociations:
-          #   - EventType: origin-request
-          #     LambdaFunctionARN: !Ref LambdaEdge.Version
+          LambdaFunctionAssociations:
+            - EventType: origin-request
+              LambdaFunctionARN: !Ref LambdaEdge.Version
         DefaultRootObject: !Join ["", [!Ref BranchName, "/", index.html]]
         Enabled: true
         HttpVersion: http2
