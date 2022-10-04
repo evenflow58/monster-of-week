@@ -111,8 +111,9 @@ Resources:
                 TemplatePath: lambdaEdgeBuildOutput::infrastructure/template.package.yaml
                 Capabilities: CAPABILITY_IAM
                 ParameterOverrides: !Sub
-                  - '{ "Domain": "${SubDomain}.monsterplaybook.rip" }'
+                  - '{ "Domain": "${SubDomain}.monsterplaybook.rip", "BranchName": "${BranchName}" }'
                   - SubDomain: !If [IsProduction, 'staging', !Ref GitHubBranch]
+                  - BranchName: !Ref GitHubBranch
               InputArtifacts:
                 - Name: lambdaEdgeBuildOutput
               RunOrder: 1
