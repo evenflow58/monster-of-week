@@ -146,4 +146,4 @@ Resources:
               - "${BucketArn}/*"
               - BucketArn: !ImportValue UiBucketArn
             Principal:
-              AWS: "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity *"
+              Service: cloudfront.amazonaws.com
