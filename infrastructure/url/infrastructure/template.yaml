@@ -106,7 +106,7 @@ Resources:
           LambdaFunctionAssociations:
             - EventType: origin-request
               LambdaFunctionARN: !Ref LambdaEdge.Version
-        DefaultRootObject: !Join ["", ["/", !Ref BranchName, "/", index.html]]
+        DefaultRootObject: !Join ["", ["", !Ref BranchName, "/", index.html]]
         Enabled: true
         HttpVersion: http2
         Origins:
@@ -146,4 +146,4 @@ Resources:
               - "${BucketArn}/*"
               - BucketArn: !ImportValue UiBucketArn
             Principal:
-              CanonicalUser: !GetAtt CloudFrontOAI.S3CanonicalUserId
+              AWS: "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity *"
