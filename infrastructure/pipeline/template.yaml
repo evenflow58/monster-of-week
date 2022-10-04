@@ -113,7 +113,7 @@ Resources:
                 ParameterOverrides: !Sub
                   - '{ "Domain": "${SubDomain}.monsterplaybook.rip", "BranchName": "${BranchName}" }'
                   - SubDomain: !If [IsProduction, 'staging', !Ref GitHubBranch]
-                  - BranchName: !Ref GitHubBranch
+                    BranchName: !Ref GitHubBranch
               InputArtifacts:
                 - Name: lambdaEdgeBuildOutput
               RunOrder: 1
