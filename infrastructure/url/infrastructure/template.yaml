@@ -142,6 +142,8 @@ Resources:
           - Action:
               - s3:GetObject
             Effect: Allow
-            Resource: !ImportValue UiBucketArn
+            Resource: !Sub
+              - "${BucketArn}/*"
+              - BucketArn: !ImportValue UiBucketArn
             Principal:
               CanonicalUser: !GetAtt CloudFrontOAI.S3CanonicalUserId
