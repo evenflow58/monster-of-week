@@ -139,10 +139,9 @@ Resources:
       Bucket: !ImportValue UiBucketName
       PolicyDocument:
         Statement:
-          -
-            Action:
+          - Action:
               - s3:GetObject
             Effect: Allow
-            Resource: !Join [ "", [ "arn:aws:s3:::", !ImportValue UiBucketName, "/*" ] ]
+            Resource: !ImportValue UiBucketArn
             Principal:
               CanonicalUser: !GetAtt CloudFrontOAI.S3CanonicalUserId
