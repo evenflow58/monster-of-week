@@ -178,6 +178,12 @@ Resources:
                 Effect: Allow
                 Resource: !Sub 'arn:aws:cloudformation:${AWS::Region}:aws:transform/*'
               - Action:
+                  - logs:CreateLogGroup
+                  - logs:PutRetentionPolicy
+                  - logs:DeleteLogGroup
+                Effect: Allow
+                Resource: !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/*'
+              - Action:
                   - cloudformation:CreateStack
                   - cloudformation:DeleteStack
                   - cloudformation:DescribeStacks
@@ -228,6 +234,10 @@ Resources:
                   - route53:GetChangeRequest
                 Effect: Allow
                 Resource: arn:aws:route53:::change/*
+              - Action:
+                  - s3:PutBucketPolicy
+                Effect: Allow
+                Resource: arn:aws:s3:::*
               - Action:
                   - s3:GetObject
                 Effect: Allow

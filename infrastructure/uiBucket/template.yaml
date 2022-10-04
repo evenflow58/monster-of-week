@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: The Monster of the Week site infrastructure
+Description: The Monster of the Week UI bucket
 
 Parameters:
   BucketName:
@@ -7,33 +7,14 @@ Parameters:
     Default: monster-of-the-week-ui
 
 Resources:
-  # UiBucketPolicy:
-  #   Type: AWS::S3::BucketPolicy
-  #   Properties:
-  #     Bucket: !Ref UiBucket
-  #     PolicyDocument:
-  #       Id: UiBucketPolicy
-  #       Version: 2012-10-17
-  #       Statement:
-  #         - Sid: ReadAccess
-  #           Effect: Allow
-  #           # Principal: "*"
-  #           Principal:
-  #             AWS: arn:aws:iam::cloudfront:*
-  #           Action:
-  #           - s3:GetObject
-  #           Resource: !Sub '${UiBucket.Arn}/*'
-
   UiBucket:
     Type: AWS::S3::Bucket
     Properties:
-      AccessControl: Private
       BucketName: !Ref BucketName
-      # AccessControl: PublicRead
-      # BucketName: !Ref BucketName
-      WebsiteConfiguration:
-        IndexDocument: index.html
-        # ErrorDocument: error.html
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
 
 Outputs:
   UiBucketName:

@@ -13,11 +13,8 @@ phases:
     commands:
       - echo "building packages"
       - npm run build-all
-      - cd infrastructure/url/
-      - aws cloudformation package --template-file template.yaml --s3-bucket $BUILD_OUTPUT_BUCKET --output-template-file ui.yaml
-  post_build:
-    commands:
-      - ls -a
+      - echo "packaging packages"
+      - npm run package-all
 
 artifacts:
   files:
@@ -30,4 +27,4 @@ artifacts:
     lambdaEdgeBuildOutput:
       base-directory: infrastructure/url
       files:
-        - ui.yaml
+        - '**/*'
