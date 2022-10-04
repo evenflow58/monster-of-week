@@ -106,7 +106,6 @@ Resources:
           LambdaFunctionAssociations:
             - EventType: origin-request
               LambdaFunctionARN: !Ref LambdaEdge.Version
-        # DefaultRootObject: !Join ["", ["", !Ref BranchName, "/", index.html]]
         Enabled: true
         HttpVersion: http2
         Origins:
@@ -114,6 +113,9 @@ Resources:
             Id: ui-bucket
             S3OriginConfig:
               OriginAccessIdentity: !Join ["", ["origin-access-identity/cloudfront/", !Ref CloudFrontOAI]]
+            OriginCustomHeaders:
+            - HeaderName: x-env-branch
+              HeaderValue: !Ref BranchName
         Comment: The monster of the week cloud front distribution
         ViewerCertificate:
           AcmCertificateArn: !Ref CloudFronCert
@@ -145,4 +147,5 @@ Resources:
             Resource: !Sub
               - "${BucketArn}/*"
               - BucketArn: !ImportValue UiBucketArn
-            Principal: "*"
+            Principal:
+              Service: cloudfront.amazonaws.com
