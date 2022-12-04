@@ -28,3 +28,8 @@ artifacts:
       base-directory: infrastructure/url
       files:
         - '**/*'
+    apiGatewayBuildOutput:
+      base-directory: infrastructure/apiGateway
+      files:
+        - '**/*'
+    

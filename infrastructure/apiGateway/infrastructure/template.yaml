@@ -1,0 +1,20 @@
+AWSTemplateFormatVersion: 2010-09-09
+Transform: 'AWS::Serverless-2016-10-31'
+Description: The Monster of the Week api gateway infrastructure
+
+Resources:
+  ApiGatway:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Description: The Monster of the Week API
+      EndpointConfiguration:
+        Types:
+          - REGIONAL
+      Name: !Sub ${AWS::StackName}-ApiGateway
+
+Outputs:
+  ApiGateway:
+   Value: !Ref ApiGatewayId
+   Description: The API Gateway ID
+   Export:
+    Name: ApiGatewayId

@@ -1,0 +1,17 @@
+AWSTemplateFormatVersion: 2010-09-09
+Transform: 'AWS::Serverless-2016-10-31'
+Description: The Monster of the Week api test get method
+
+Resources:
+  TestGet:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      Description: The Monster of the Week API test get method
+      RestApiId: !ImportValue ApiGatewayId
+      ResourceId: !GetAtt 
+        - ApiGatewayId
+        - RootResourceId
+      HttpMethod: GET
+      AuthorizationType: NONE
+      Integration:
+        Type: MOCK

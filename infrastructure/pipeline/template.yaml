@@ -78,6 +78,7 @@ Resources:
             OutputArtifacts:
               - Name: uiBuildOutput
               - Name: lambdaEdgeBuildOutput
+              - Name: apiGatewayBuildOutput
             RunOrder: 1
         - Name: Deploy
           Actions:
@@ -130,6 +131,21 @@ Resources:
                 ChangeSetName: !Sub '${AWS::StackName}-ChangeSet-Beta'
               OutputArtifacts:
                 - Name: !Sub '${AWS::StackName}-ChangeSet-Beta'
+              RunOrder: 2
+            - Name: Api
+              ActionTypeId:
+                Category: Deploy
+                Owner: AWS
+                Provider: CloudFormation
+                Version: 1
+              Configuration:
+                ActionMode: CREATE_UPDATE 
+                RoleArn: !ImportValue CloudFormationExecutionRoleArn
+                StackName: !Sub '${AWS::StackName}-API'
+                TemplatePath: apiGatewayBuildOutput::infrastructure/template.package.yaml
+                Capabilities: CAPABILITY_IAM
+              InputArtifacts:
+                - Name: apiGatewayBuildOutput
               RunOrder: 2
         - !If
           - IsProduction
