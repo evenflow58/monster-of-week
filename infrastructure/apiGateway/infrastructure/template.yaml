@@ -14,7 +14,7 @@ Resources:
 
 Outputs:
   ApiGateway:
-   Value: !Ref ApiGatewayId
+   Value: !Ref ApiGateway
    Description: The API Gateway ID
    Export:
     Name: ApiGatewayId
