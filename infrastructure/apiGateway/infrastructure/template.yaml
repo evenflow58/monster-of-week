@@ -12,9 +12,9 @@ Resources:
           - REGIONAL
       Name: !Sub ${AWS::StackName}-ApiGateway
 
-Outputs:
-  ApiGateway:
-   Value: !Ref ApiGateway
-   Description: The API Gateway ID
-   Export:
-    Name: ApiGatewayId
+  MockGet:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: ../../../api/test/get/template.yaml
+      Parameters:
+        ApiGatewayId: !Ref ApiGateway

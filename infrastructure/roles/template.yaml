@@ -245,6 +245,10 @@ Resources:
                   Fn::Sub:
                     - 'arn:aws:s3:::${ArtifactBucketId}/*'
                     - ArtifactBucketId: !ImportValue ArtifactBucketId
+              - Action:
+                  - apigateway:POST
+                Effect: Allow
+                Resource: !Sub 'arn:aws:apigateway:${AWS::Region}::/restapis'
 
   # PipelineExecutionRole:
   #   Type: AWS::IAM::Role

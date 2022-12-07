@@ -2,12 +2,17 @@ AWSTemplateFormatVersion: 2010-09-09
 Transform: 'AWS::Serverless-2016-10-31'
 Description: The Monster of the Week api test get method
 
+Parameters:
+  ApiGatewayId:
+    Type: String
+    Description: The ID of the API Gateway this method should be attached to.
+
 Resources:
   TestGet:
     Type: AWS::ApiGateway::Method
     Properties:
       Description: The Monster of the Week API test get method
-      RestApiId: !ImportValue ApiGatewayId
+      RestApiId: !Ref ApiGatewayId
       ResourceId: !GetAtt 
         - ApiGatewayId
         - RootResourceId

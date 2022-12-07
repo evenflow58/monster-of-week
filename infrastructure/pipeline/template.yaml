@@ -151,7 +151,7 @@ Resources:
                 ChangeSetName: !Sub '${AWS::StackName}-ChangeSet-UI-Beta'
               OutputArtifacts:
                 - Name: !Sub '${AWS::StackName}-ChangeSet-UI-Beta'
-              RunOrder: 2
+              RunOrder: 3
             - Name: ExecuteApiChangeSet
               ActionTypeId:
                 Category: Deploy
@@ -165,7 +165,7 @@ Resources:
                 ChangeSetName: !Sub '${AWS::StackName}-ChangeSet-Api-Beta'
               OutputArtifacts:
                 - Name: !Sub '${AWS::StackName}-ChangeSet-Api-Beta'
-              RunOrder: 2
+              RunOrder: 3
         - !If
           - IsProduction
           - Name: Production
