@@ -14,7 +14,6 @@ Resources:
   TestGet:
     Type: AWS::ApiGateway::Method
     Properties:
-      Description: The Monster of the Week API test get method
       RestApiId: !Ref ApiGatewayId
       ResourceId: !Ref RootResourceId
       HttpMethod: GET
