@@ -249,6 +249,11 @@ Resources:
                   - apigateway:POST
                 Effect: Allow
                 Resource: !Sub 'arn:aws:apigateway:${AWS::Region}::/restapis'
+              - Action:
+                  - apigateway:DELETE
+                  - apigateway:GET
+                Effect: Allow
+                Resource: !Sub 'arn:aws:apigateway:${AWS::Region}::/restapis/*'
 
   # PipelineExecutionRole:
   #   Type: AWS::IAM::Role

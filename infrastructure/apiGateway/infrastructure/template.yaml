@@ -18,3 +18,4 @@ Resources:
       TemplateURL: ../../../api/test/get/template.yaml
       Parameters:
         ApiGatewayId: !Ref ApiGateway
+        RootResourceId: !GetAtt ApiGateway.RootResourceId

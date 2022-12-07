@@ -6,6 +6,9 @@ Parameters:
   ApiGatewayId:
     Type: String
     Description: The ID of the API Gateway this method should be attached to.
+  RootResourceId:
+    Type: String
+    Description: The ID of the root resource of the api gateway
 
 Resources:
   TestGet:
@@ -13,9 +16,7 @@ Resources:
     Properties:
       Description: The Monster of the Week API test get method
       RestApiId: !Ref ApiGatewayId
-      ResourceId: !GetAtt 
-        - ApiGatewayId
-        - RootResourceId
+      ResourceId: !Ref RootResourceId
       HttpMethod: GET
       AuthorizationType: NONE
       Integration:

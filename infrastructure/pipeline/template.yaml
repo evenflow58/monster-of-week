@@ -130,7 +130,7 @@ Resources:
                 StackName: !Sub '${AWS::StackName}-Stack-Api-Beta'
                 ChangeSetName: !Sub '${AWS::StackName}-ChangeSet-Api-Beta'
                 TemplatePath: apiGatewayBuildOutput::infrastructure/template.package.yaml
-                Capabilities: CAPABILITY_IAM
+                Capabilities: CAPABILITY_IAM,CAPABILITY_AUTO_EXPAND
                 # ParameterOverrides: !Sub
                 #   - '{ "Domain": "${SubDomain}.monsterplaybook.rip", "BranchName": "${BranchName}" }'
                 #   - SubDomain: !If [IsProduction, 'staging', !Ref GitHubBranch]
