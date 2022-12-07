@@ -12,13 +12,13 @@ Resources:
           - REGIONAL
       Name: !Sub ${AWS::StackName}-ApiGateway
 
-  # MockGet:
-  #   Type: AWS::CloudFormation::Stack
-  #   Properties:
-  #     TemplateURL: ../../../api/test/get/template.yaml
-  #     Parameters:
-  #       ApiGatewayId: !Ref ApiGateway
-  #       RootResourceId: !GetAtt ApiGateway.RootResourceId
+  MockGet:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: ../../../api/test/get/template.yaml
+      Parameters:
+        ApiGatewayId: !Ref ApiGateway
+        RootResourceId: !GetAtt ApiGateway.RootResourceId
 
 Outputs:
   ApiGatewayId:
