@@ -252,6 +252,7 @@ Resources:
               - Action:
                   - apigateway:DELETE
                   - apigateway:GET
+                  - apigateway:PUT
                 Effect: Allow
                 Resource: !Sub 'arn:aws:apigateway:${AWS::Region}::/restapis/*'
 

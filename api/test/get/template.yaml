@@ -20,3 +20,6 @@ Resources:
       AuthorizationType: NONE
       Integration:
         Type: MOCK
+        PassthroughBehavior: NEVER
+        IntegrationResponses:
+          - StatusCode: 200
