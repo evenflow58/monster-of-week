@@ -20,7 +20,8 @@
     "test-all": "npm-run-all --parallel test:*",
     "package-all": "npm-run-all --parallel package:*",
     "package:edge": "cd infrastructure/url && npm run package",
-    "package:api-gateway": "cd infrastructure/apiGateway && npm run package"
+    "package:api-gateway": "cd infrastructure/apiGateway && npm run package",
+    "package:api-gateway-deployment": "cd infrastructure/apiGatewayDeployment && npm run package"
   },
   "repository": {
     "type": "git",
