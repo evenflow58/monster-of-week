@@ -22,7 +22,7 @@ Resources:
         Type: MOCK
         PassthroughBehavior: NEVER
         RequestTemplates:
-          application/json: '{}'
+          application/json: '{"statusCode": 200}'
         IntegrationResponses:
           - StatusCode: 200
       MethodResponses:
