@@ -79,6 +79,7 @@ Resources:
               - Name: uiBuildOutput
               - Name: lambdaEdgeBuildOutput
               - Name: apiGatewayBuildOutput
+              - Name: apiGatewayDeploymentBuildOutput
             RunOrder: 1
         - Name: Deploy
           Actions:
