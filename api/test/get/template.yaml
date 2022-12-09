@@ -21,5 +21,11 @@ Resources:
       Integration:
         Type: MOCK
         PassthroughBehavior: NEVER
+        RequestTemplates:
+          application/json: '{}'
         IntegrationResponses:
           - StatusCode: 200
+      MethodResponses:
+        - StatusCode: 200
+          ResponseModels:
+            application/json: Empty
