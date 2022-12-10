@@ -11,7 +11,17 @@ Parameters:
     Description: The ID of the root resource of the api gateway
 
 Resources:
-  TestGet:
+  Function:
+    Type: AWS::Serverless::Function
+    Properties:
+      MemorySize: 128
+      Architectures: ["arm64"]
+      Handler: bootstrap
+      Runtime: provided.al2
+      Timeout: 5
+      CodeUri: target/lambda/basic
+
+  Endpoint:
     Type: AWS::ApiGateway::Method
     Properties:
       RestApiId: !Ref ApiGatewayId

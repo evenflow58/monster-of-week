@@ -152,10 +152,9 @@ Resources:
                 ChangeSetName: !Sub '${AWS::StackName}-ChangeSet-Api-Deployment-Beta'
                 TemplatePath: apiGatewayDeploymentBuildOutput::infrastructure/template.package.yaml
                 Capabilities: CAPABILITY_IAM
-                # ParameterOverrides: !Sub
-                #   - '{ "Domain": "${SubDomain}.monsterplaybook.rip", "BranchName": "${BranchName}" }'
-                #   - SubDomain: !If [IsProduction, 'staging', !Ref GitHubBranch]
-                #     BranchName: !Ref GitHubBranch
+                ParameterOverrides: !Sub
+                  - '{ "StageName": "${StageName}" }'
+                  - StageName: !If [IsProduction, 'staging', !Ref GitHubBranch]
               InputArtifacts:
                 - Name: apiGatewayDeploymentBuildOutput
               RunOrder: 1
