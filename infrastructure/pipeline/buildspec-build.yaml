@@ -10,7 +10,7 @@ phases:
       - echo "installing packages"
       - npm run install-all
       - echo "installing rust dependencies"
-      - curl https://sh.rustup.rs -sSf | sh
+      - curl https://sh.rustup.rs -sSf | sh -y
   build:
     commands:
       - echo "building packages"
