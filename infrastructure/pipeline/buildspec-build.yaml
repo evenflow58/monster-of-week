@@ -15,6 +15,8 @@ phases:
       - echo "installing rust dependencies"
       - curl https://sh.rustup.rs -sSf | bash -s -- -y
       - source $HOME/.cargo/env
+      - brew tap cargo-lambda/cargo-lambda
+      - brew install cargo-lambda
       # - cd $HOME/.cargo/bin
       # - ls
   build:
