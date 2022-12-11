@@ -19,7 +19,7 @@ Resources:
       Handler: bootstrap
       Runtime: provided.al2
       Timeout: 5
-      CodeUri: target/lambda/basic
+      CodeUri: target/lambda/get
 
   Endpoint:
     Type: AWS::ApiGateway::Method
