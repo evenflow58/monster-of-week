@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "$HOME/.cargo lambda build --release",
+    "build": "cargo lambda build --release",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
