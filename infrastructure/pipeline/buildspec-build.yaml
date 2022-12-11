@@ -11,6 +11,8 @@ phases:
       - npm run install-all
       - echo "installing rust dependencies"
       - curl https://sh.rustup.rs -sSf | bash -s -- -y
+      - cd $HOME/.cargo/bin
+      - ls
   build:
     commands:
       - echo "building packages"
