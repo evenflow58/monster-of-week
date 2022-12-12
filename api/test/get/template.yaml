@@ -20,22 +20,26 @@ Resources:
       Runtime: provided.al2
       Timeout: 5
       CodeUri: target/lambda/get
+      Events:
+        GetTest:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref ApiGatewayId
+            Method: GET
+            Path: /test
 
-  Endpoint:
-    Type: AWS::ApiGateway::Method
-    Properties:
-      RestApiId: !Ref ApiGatewayId
-      ResourceId: !Ref RootResourceId
-      HttpMethod: GET
-      AuthorizationType: NONE
-      Integration:
-        Type: MOCK
-        PassthroughBehavior: NEVER
-        RequestTemplates:
-          application/json: '{"mesage": "request template"}'
-        IntegrationResponses:
-          - StatusCode: 200
-      MethodResponses:
-        - StatusCode: 200
-          ResponseModels:
-            application/json: Empty
+  # Endpoint:
+  #   Type: AWS::ApiGateway::Method
+  #   Properties:
+  #     RestApiId: !Ref ApiGatewayId
+  #     ResourceId: !Ref RootResourceId
+  #     HttpMethod: GET
+  #     AuthorizationType: NONE
+  #     Integration:
+  #       Type: MOCK
+  #       PassthroughBehavior: NEVER
+  #       RequestTemplates:
+  #         application/json: '{"mesage": "request template"}'
+  #       IntegrationResponses:
+  #         - StatusCode: 200
+      
