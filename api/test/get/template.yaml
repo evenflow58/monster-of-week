@@ -20,26 +20,87 @@ Resources:
       Runtime: provided.al2
       Timeout: 5
       CodeUri: target/lambda/get
-      Events:
-        GetTest:
-          Type: HttpApi
-          Properties:
-            ApiId: !Ref ApiGatewayId
-            Method: GET
-            Path: /test
 
-  # Endpoint:
-  #   Type: AWS::ApiGateway::Method
-  #   Properties:
-  #     RestApiId: !Ref ApiGatewayId
-  #     ResourceId: !Ref RootResourceId
-  #     HttpMethod: GET
-  #     AuthorizationType: NONE
-  #     Integration:
-  #       Type: MOCK
-  #       PassthroughBehavior: NEVER
-  #       RequestTemplates:
-  #         application/json: '{"mesage": "request template"}'
-  #       IntegrationResponses:
-  #         - StatusCode: 200
+  Resource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      ParentId: !Ref RootResourceId
+      PathPart: 'test'
+      RestApiId: !Ref ApiGatewayId
+
+  Endpoint:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref ApiGatewayId
+      ResourceId: !Ref RootResourceId
+      HttpMethod: GET
+      AuthorizationType: NONE
+      Integration:
+        Type: AWS
+        TimeoutInMillis: 29000
+        IntegrationHttpMethod: POST
+        OperationName: "Test get method"
+        Uri: !Sub
+          - "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${lambdaArn}/invocations"
+          - lambdaArn: !GetAtt Function.Arn
+        # IntegrationResponses:
+        #   - ResponseTemplates: {"application/json": ""}
+        #     ResponseParameters:
+        #       method.response.header.X-Requested-With: "'*'"
+        #       method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,x-requested-with'"
+        #       method.response.header.Access-Control-Allow-Methods: "'GET,OPTIONS'"
+        #       method.response.header.Access-Control-Allow-Origin: "'*'"
+        #     StatusCode: 200
+
+  LambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: ""
+            Effect: "Allow"
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: /
+
+  Permission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !GetAtt Function.Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${ApiGatewayId}/*/*
+
+
+  ApiRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: ""
+            Effect: "Allow"
+            Principal:
+              Service:
+                - apigateway.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: /
+
+  ApiPolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: "TestGetLmabdaAccess"
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Action: "lambda:*"
+            Resource: !GetAtt Function.Arn
+        Roles:
+          - !Ref Role
       
