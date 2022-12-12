@@ -20,6 +20,7 @@ Resources:
       Runtime: provided.al2
       Timeout: 5
       CodeUri: target/lambda/get
+      Role: !GetAtt LambdaRole.Arn
 
   Resource:
     Type: AWS::ApiGateway::Resource
@@ -102,5 +103,5 @@ Resources:
             Action: "lambda:*"
             Resource: !GetAtt Function.Arn
         Roles:
-          - !Ref Role
+          - !Ref ApiRole
       
