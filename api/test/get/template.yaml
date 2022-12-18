@@ -40,9 +40,8 @@ Resources:
         Type: AWS
         TimeoutInMillis: 29000
         IntegrationHttpMethod: POST
-        OperationName: "Test get method"
         Uri: !Sub
-          - "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${lambdaArn}/invocations"
+          - 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${lambdaArn}/invocations'
           - lambdaArn: !GetAtt Function.Arn
         # IntegrationResponses:
         #   - ResponseTemplates: {"application/json": ""}

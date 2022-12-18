@@ -211,16 +211,21 @@ Resources:
               - Action:
                   - lambda:DeleteFunction
                   - lambda:CreateFunction
+                  - lambda:UpdateFunction
+                  - lambda:GetFunction
                   - lambda:TagResource
                   - lambda:UntagResource
-                  - lambda:GetFunction
                   - lambda:ListVersionsByFunction
+                  - lambda:ListTags
                   - lambda:PublishVersion
                   - lambda:CreateAlias
                   - lambda:DeleteAlias
-                  - lambda:UpdateFunctionCode
-                  - lambda:ListTags
                   - lambda:UpdateAlias
+                  - lambda:UpdateFunctionCode
+                  - lambda:UpdateFunctionConfiguration
+                  - lambda:AddPermission
+                  - lambda:UpdatePermission
+                  - lambda:RemovePermission
                 Effect: Allow
                 Resource: !Sub 'arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:*'
               - Action:
