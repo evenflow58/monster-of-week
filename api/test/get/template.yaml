@@ -101,6 +101,6 @@ Resources:
           - Effect: "Allow"
             Action: "lambda:*"
             Resource: !GetAtt Function.Arn
-        Roles:
-          - !Ref ApiRole
+      Roles:
+        - !Ref ApiRole
       
