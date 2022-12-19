@@ -223,6 +223,7 @@ Resources:
                   - lambda:UpdateAlias
                   - lambda:UpdateFunctionCode
                   - lambda:UpdateFunctionConfiguration
+                  - lambda:GetFunctionCodeSigningConfig
                   - lambda:AddPermission
                   - lambda:UpdatePermission
                   - lambda:RemovePermission
