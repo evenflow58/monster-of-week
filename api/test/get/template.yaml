@@ -26,14 +26,14 @@ Resources:
     Type: AWS::ApiGateway::Resource
     Properties:
       ParentId: !Ref RootResourceId
-      PathPart: 'test'
+      PathPart: test
       RestApiId: !Ref ApiGatewayId
 
   Endpoint:
     Type: AWS::ApiGateway::Method
     Properties:
       RestApiId: !Ref ApiGatewayId
-      ResourceId: !Ref RootResourceId
+      ResourceId: !Ref Resource
       HttpMethod: GET
       AuthorizationType: NONE
       Integration:
