@@ -8,8 +8,7 @@
   },
   "scripts": {
     "build": "npm-run-all --parallel build:* && cd ../",
-    "build:test": "cd test/get && npm run build",
-    "package": "sam package --template-file ./template.yaml --s3-bucket $S3_BUCKET --s3-prefix url --output-template-file ./template.package.yaml"
+    "build:test": "cd test/get && npm run build"
   },
   "author": "",
   "license": "ISC"

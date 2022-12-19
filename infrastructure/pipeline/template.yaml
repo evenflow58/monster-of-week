@@ -80,6 +80,7 @@ Resources:
               - Name: lambdaEdgeBuildOutput
               - Name: apiGatewayBuildOutput
               - Name: apiGatewayDeploymentBuildOutput
+              - Name: testGetBuildOutput
             RunOrder: 1
         - Name: Deploy
           Actions:
