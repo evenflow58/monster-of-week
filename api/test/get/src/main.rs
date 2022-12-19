@@ -4,7 +4,8 @@ use lambda_http::{run, service_fn, Body, Error, Request, RequestExt, Response};
 /// Write your code inside it.
 /// There are some code example in the following URLs:
 /// - https://github.com/awslabs/aws-lambda-rust-runtime/tree/main/examples
-async fn function_handler(event: Request) -> Result<Response<Body>, Error> {
+async fn function_handler(event) -> Result<Response<Body>, Error> {
+    println!(event);
     // Extract some useful information from the request
 
     // Return something that implements IntoResponse.
@@ -20,7 +21,6 @@ async fn function_handler(event: Request) -> Result<Response<Body>, Error> {
 #[tokio::main]
 async fn main() -> Result<(), Error> {
     env_logger::init();
-    println!("Test");
     tracing_subscriber::fmt()
         .with_max_level(tracing::Level::INFO)
         // disable printing the name of the module in every log line.
@@ -29,5 +29,6 @@ async fn main() -> Result<(), Error> {
         .without_time()
         .init();
 
+    println!("Test 2");
     run(service_fn(function_handler)).await
 }
