@@ -36,6 +36,8 @@ Resources:
       ResourceId: !Ref Resource
       HttpMethod: GET
       AuthorizationType: NONE
+      MethodResponses:
+        - StatusCode: 200
       Integration:
         Type: AWS
         TimeoutInMillis: 29000
@@ -44,7 +46,10 @@ Resources:
           - 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${lambdaArn}/invocations'
           - lambdaArn: !GetAtt Function.Arn
         IntegrationResponses:
-          - StatusCode: 200
+          - ResponseTemplates: {"application/json": ""}
+            ResponseParameters:
+              method.response.status: "200"
+            StatusCode: 200
         # IntegrationResponses:
         #   - ResponseTemplates: {"application/json": ""}
         #     ResponseParameters:
