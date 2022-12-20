@@ -47,8 +47,8 @@ Resources:
           - lambdaArn: !GetAtt Function.Arn
         IntegrationResponses:
           - ResponseTemplates: {"application/json": ""}
-            ResponseParameters:
-              method.response.status: "200"
+            # ResponseParameters:
+            #   method.response.status: "200"
             StatusCode: 200
         # IntegrationResponses:
         #   - ResponseTemplates: {"application/json": ""}
