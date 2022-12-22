@@ -47,12 +47,12 @@ Resources:
           - lambdaArn: !GetAtt Function.Arn
         IntegrationResponses:
           - ResponseTemplates:
-              application/json: ""
-            ResponseParameters:
-              method.response.header.X-Requested-With: "'*'"
-              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,x-requested-with'"
-              method.response.header.Access-Control-Allow-Methods: "'GET,OPTIONS'"
-              method.response.header.Access-Control-Allow-Origin: "'*'"
+              application/json:
+            # ResponseParameters:
+            #   method.response.header.X-Requested-With: "'*'"
+            #   method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,x-requested-with'"
+            #   method.response.header.Access-Control-Allow-Methods: "'GET,OPTIONS'"
+            #   method.response.header.Access-Control-Allow-Origin: "'*'"
             StatusCode: 200
 
   LambdaRole:
