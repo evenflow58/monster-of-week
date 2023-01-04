@@ -47,7 +47,11 @@ Resources:
           - lambdaArn: !GetAtt Function.Arn
         IntegrationResponses:
           - ResponseTemplates:
-              application/json: ""
+              application/json: |
+              #set($inputRoot = $input.path('$'))
+              #set($context.responseOverride.status = $inputRoot.statusCode)
+              $input.json($inputRoot.body)
+              #end
             # ResponseParameters:
             #   method.response.header.X-Requested-With: "'*'"
             #   method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,x-requested-with'"
