@@ -11,7 +11,7 @@ async fn function_handler(event: Request) -> Result<Response<Body>, Error> {
     // Return something that implements IntoResponse.
     // It will be serialized to the right response event automatically by the runtime
     let resp = Response::builder()
-        .status(400)
+        .status(200)
         .header("content-type", "application/json")
         .body("Hello World".into())
         .map_err(Box::new)?;
