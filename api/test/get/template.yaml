@@ -45,7 +45,7 @@ Resources:
         Uri: !Sub
           - 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${lambdaArn}/invocations'
           - lambdaArn: !GetAtt Function.Arn
-        IntegrationReponses:
+        IntegrationResponses:
           - ResponseTemplates:
               application/json: |
                 #set($inputRoot = $input.path('$'))
