@@ -50,7 +50,6 @@ Resources:
               application/json: |
               #set($inputRoot = $input.path('$'))
               #set($context.responseOverride.status = $inputRoot.statusCode)
-              {}
               #end
             # ResponseParameters:
             #   method.response.header.X-Requested-With: "'*'"
