@@ -107,6 +107,9 @@ Resources:
               Configuration:
                 ActionMode: CREATE_UPDATE
                 RoleArn: !ImportValue CloudFormationExecutionRoleArn
+                ParameterOverrides: !Sub
+                  - '{ "BasePathDomain": "${BasePathDomain}" } '
+                  - BasePathDomain: !If [IsProduction, 'api.monsterplaybook.rip', !Sub '${GitHubBranch}.api.monsterplaybook.rip']
                 StackName: !Sub '${AWS::StackName}-Stack-Api'
                 TemplatePath: apiGatewayBuildOutput::infrastructure/template.package.yaml
                 Capabilities: CAPABILITY_IAM,CAPABILITY_AUTO_EXPAND

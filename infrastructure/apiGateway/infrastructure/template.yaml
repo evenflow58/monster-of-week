@@ -2,6 +2,11 @@ AWSTemplateFormatVersion: 2010-09-09
 Transform: 'AWS::Serverless-2016-10-31'
 Description: The Monster of the Week api gateway infrastructure
 
+Parameters:
+  BasePathDomain:
+    Type: String
+    Default: ''
+
 Resources:
   ApiGateway:
     Type: AWS::ApiGateway::RestApi
@@ -11,6 +16,12 @@ Resources:
         Types:
           - REGIONAL
       Name: !Sub ${AWS::StackName}-ApiGateway
+
+  ApiBasePath:
+    Type: AWS::Apigateway::BasePathMapping
+    Properties:
+      DomainName: !Ref BasePathDomain
+      RestApiId: !Ref ApiGateway
 
   TestGet:
     Type: AWS::CloudFormation::Stack
