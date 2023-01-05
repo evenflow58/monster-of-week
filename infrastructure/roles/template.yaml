@@ -262,7 +262,7 @@ Resources:
                   - apigateway:POST
                   - apigateway:PATCH
                 Effect: Allow
-                Resource: !Sub 'arn:aws:apigateway:${AWS::Region}::/restapis/*'
+                Resource: !Sub 'arn:aws:apigateway:${AWS::Region}::*'
 
   # PipelineExecutionRole:
   #   Type: AWS::IAM::Role
