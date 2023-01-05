@@ -51,7 +51,7 @@ Resources:
                 #set($inputRoot = $input.path('$'))
                 $inputRoot.body
                 #set($context.responseOverride.header = $inputRoot.headers)
-              StatusCode: 200
+            StatusCode: 200
         # IntegrationResponses:
         #   - ResponseTemplates:
         #       application/json: |
