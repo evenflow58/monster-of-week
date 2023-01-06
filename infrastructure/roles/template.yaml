@@ -241,6 +241,12 @@ Resources:
                 Effect: Allow
                 Resource: arn:aws:route53:::change/*
               - Action:
+                  - acm:RequestCertificate
+                  - acm:DescribeCertificate
+                  - acm:DeleteCertificate
+                Effect: Allow
+                Resource: !Sub 'arn:aws:acm:${AWS::Region}:${AWS::AccountId}:certificate/*'
+              - Action:
                   - s3:PutBucketPolicy
                 Effect: Allow
                 Resource: arn:aws:s3:::*
