@@ -17,11 +17,16 @@ Resources:
           - REGIONAL
       Name: !Sub ${AWS::StackName}-ApiGateway
 
+  Certificate:
+    Type: AWS::CertificateManager::Certificate
+    Properties:
+      DomainName: !Ref BasePathDomain
+
   ApiGatewayDomainName:
     Type: AWS::ApiGateway::DomainName
     Properties:
       DomainName: !Ref BasePathDomain
-      CertificateArn: arn:aws:acm:us-east-1:625961017727:certificate/edd15537-9b78-4e21-a100-9ce277ca42bf
+      CertificateArn: !Ref Certificate
 
   ApiBasePath:
     Type: AWS::ApiGateway::BasePathMapping
