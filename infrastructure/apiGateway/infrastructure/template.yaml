@@ -17,10 +17,15 @@ Resources:
           - REGIONAL
       Name: !Sub ${AWS::StackName}-ApiGateway
 
+  ApiGatewayDomainName:
+    Type: AWS::ApiGateway::DomainName
+    Properties:
+      DomainName: !Ref BasePathDomain
+
   ApiBasePath:
     Type: AWS::ApiGateway::BasePathMapping
     Properties:
-      DomainName: !Ref BasePathDomain
+      DomainName: !Ref ApiGatewayDomainName
       RestApiId: !Ref ApiGateway
 
   TestGet:
