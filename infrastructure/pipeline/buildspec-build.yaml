@@ -10,8 +10,10 @@ phases:
     commands:
       - echo "installing base packages"
       - npm i
+
       - echo "installing packages"
       - npm run install-all
+
       - echo "installing rust dependencies"
       - curl https://sh.rustup.rs -sSf | bash -s -- -y
       - source $HOME/.cargo/env
@@ -20,6 +22,7 @@ phases:
     commands:
       - echo "building packages"
       - npm run build-all
+
       - echo "packaging packages"
       - npm run package-all
 

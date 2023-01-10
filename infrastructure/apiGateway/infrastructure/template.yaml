@@ -17,17 +17,17 @@ Resources:
           - REGIONAL
       Name: !Sub ${AWS::StackName}-ApiGateway
 
-  # ApiGatewayDomainName:
-  #   Type: AWS::ApiGateway::DomainName
-  #   Properties:
-  #     DomainName: !Ref BasePathDomain
-  #     CertificateArn: arn:aws:acm:us-east-1:625961017727:certificate/edd15537-9b78-4e21-a100-9ce277ca42bf
+  ApiGatewayDomainName:
+    Type: AWS::ApiGateway::DomainName
+    Properties:
+      DomainName: !Ref BasePathDomain
+      CertificateArn: arn:aws:acm:us-east-1:625961017727:certificate/edd15537-9b78-4e21-a100-9ce277ca42bf
 
-  # ApiBasePath:
-  #   Type: AWS::ApiGateway::BasePathMapping
-  #   Properties:
-  #     DomainName: !Ref ApiGatewayDomainName
-  #     RestApiId: !Ref ApiGateway
+  ApiBasePath:
+    Type: AWS::ApiGateway::BasePathMapping
+    Properties:
+      DomainName: !Ref ApiGatewayDomainName
+      RestApiId: !Ref ApiGateway
 
   TestGet:
     Type: AWS::CloudFormation::Stack
